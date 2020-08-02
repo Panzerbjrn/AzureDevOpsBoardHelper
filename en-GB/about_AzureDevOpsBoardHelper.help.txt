@@ -1,0 +1,18 @@
+TOPIC
+		about_AzureDevOpsBoardHelper
+
+SHORT DESCRIPTION
+		Helper module for working with Azure DevOps boards.
+
+LONG DESCRIPTION
+		Default: A detailed, full description of the subject or purpose of the module.
+
+EXAMPLES
+		Default: Examples of how to use the module or how the subject feature works in practice.
+
+KEYWORDS
+		Default: Terms or titles on which you might expect your users to search for the information in this topic.
+
+SEE ALSO
+		Default: Text-only references for further reading. Hyperlinks cannot work in the Windows PowerShell console.
+
