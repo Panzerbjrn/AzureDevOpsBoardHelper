@@ -1,11 +1,12 @@
-Function Get-AzDoUserStoryWorkItem
+Function Delete-AzDoUserStoryWorkItem
 {
 <#
 	.SYNOPSIS
-		This will get a work item.
+		This will delete a work item.
 
 	.DESCRIPTION
-		This will get a work item.
+		This will delete a work item. Theitem is moved to the recycle binn in case it needs to be restored.
+		The REST API has an option to delete fully, without being able to restore from recycle bin, but that is not implemented here.
 
 	.EXAMPLE
 		Get-AzDOProjects -PersonalAccessToken gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq -Organisation panzerbjrn
@@ -19,11 +20,17 @@ Function Get-AzDoUserStoryWorkItem
 	.PARAMETER OrganisationName
 		The name of your Azure Devops Organisation
 
+	.PARAMETER Project
+		The name of your Azure Devops project
+
+	.PARAMETER WorkItemID
+		The ID number of the work item you wish to delete
+
 	.INPUTS
 		Input is from command line or called from a script.
 
 	.OUTPUTS
-		This will output a list of projects.
+		This will output the item being deleted.
 
 	.NOTES
 		Version:			1
@@ -57,16 +64,14 @@ Function Get-AzDoUserStoryWorkItem
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
 		$Header = $AzureDevOpsAuthenicationHeader = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
-		
-		$Uri = "https://dev.azure.com/$Organisation/$Project/_apis/wit/workitems/$WorkItemID`?api-version=5.1"
 
-
+		$Uri = "https://dev.azure.com/$Organisation/$Project/_apis/wit/workitems/$($workItemId)?api-version=5.1"
 	}
 
 	PROCESS
 	{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
-		$WItem = Invoke-RestMethod -Uri $uri -Method Get -Headers $AzureDevOpsAuthenicationHeader #Retrieves Work Item
+		$WItem = Invoke-RestMethod -Uri $uri -Method DELETE -Headers $AzureDevOpsAuthenicationHeader	#This deletes the Work item
 	}
 	END
 	{

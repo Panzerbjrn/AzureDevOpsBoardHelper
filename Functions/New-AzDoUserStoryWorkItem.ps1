@@ -50,17 +50,21 @@ Function New-AzDoUserStoryWorkItem
 		[string]$Project,
 
 		[Parameter(Mandatory)]
-		[Alias('WorkItemTitle')]
-		[string]$Title,
+		[Alias('Title')]
+		[string]$WorkItemTitle,
 
 		[Parameter(Mandatory)]
 		[string]$Board,
 
-		[Parameter][string]$Description,
+		[Parameter()][string]$Description,
 		
-		[Parameter][ValidateSet(1,2,3,4)][string]$Priority = 3,
+		[Parameter()][string]$AcceptanceCriteria,
+		
+		[Parameter()][ValidateSet(1,2,3,4)][string]$Priority = 3,
 
-		[Parameter][string]$AssignedTo
+		[Parameter()][string]$AssignedTo,
+		
+		[Parameter()][string[]]$Tags
 
 	)
 
@@ -69,66 +73,82 @@ Function New-AzDoUserStoryWorkItem
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 
 		$BaseUri = "https://dev.azure.com/$($Organisation)/"
-		$Uri = $BaseUri + "$TeamName/_apis/wit/workitems/$" + $WorkItemType + "?api-version=5.1"
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$User Story?api-version=5.1"
 
 		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
 		$Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
-		$Body = @([pscustomobject]@{
-				op = "add"
-				path = '/fields/System.Title'
-				value = $WorkItemTitle
-			}
-		)
 	}
 
 	PROCESS
 	{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 
-		$Item = @([pscustomobject]@{
+		$Body = @([pscustomobject]@{
+				op = "add"
+				path = '/fields/System.Title'
+				value = $WorkItemTitle
+			}
+		)
+		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/System.AreaPath'
 				value = $Board
 			}
 		)
-				#value = $Project + '\Plan\' + $Board
-		$Body += $Item
 		
-		$Item = @([pscustomobject]@{
+		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/Microsoft.VSTS.Common.Priority'
-				value = $Project + '\Plan\' + $Priority
+				value = $Priority
 			}
 		)
-		$Body += $Item
 		
-		$Item = @([pscustomobject]@{
+		$Body += @([pscustomobject]@{
 				op = "add"
-				path = '/fields/System.AssignedTo/displayName'
-				value = $Project + '\Plan\' + $AssignedTo
+				path = '/fields/System.AssignedTo'
+				value = $AssignedTo
 			}
 		)
-		$Body += $Item
 		
 		IF ($Description)
 		{
-			$Item = @([pscustomobject]@{
+			$Body += @([pscustomobject]@{
 					op = "add"
 					path = '/fields/System.Description'
-					value = $Project + '\Plan\' + $Description
+					value = $Description
 				}
 			)
-			$Body += $Item
+		}
+		
+		IF ($AcceptanceCriteria)
+		{
+			$Body += @([pscustomobject]@{
+					op = "add"
+					path = '/fields/Microsoft.VSTS.Common.AcceptanceCriteria'
+					value = $AcceptanceCriteria
+				}
+			)
+		}
+		
+		IF ($Tags)
+		{
+			ForEach ($Tag in $Tags) {$CombiTag += "$Tag;"}
+			$Body += @([pscustomobject]@{
+					op = "add"
+					path = '/fields/System.Tags'
+					value = $CombiTag
+				}
+			)
 		}
 		$Body = ConvertTo-Json $Body
 		$Body
-		#$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json-patch+json" -Body $Body
+		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json-patch+json" -Body $Body
 
 	}
 	END
 	{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
-		$Body
-		#$Result
+		#$Body
+		$Result
 	}
 }
