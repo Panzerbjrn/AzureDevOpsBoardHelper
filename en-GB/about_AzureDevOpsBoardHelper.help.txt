@@ -1,18 +1,23 @@
 TOPIC
-		about_AzureDevOpsBoardHelper
+	about_AzureDevOpsBoardHelper
 
 SHORT DESCRIPTION
-		Helper module for working with Azure DevOps boards.
+	Helper module for working with Azure DevOps boards.
 
 LONG DESCRIPTION
-		Default: A detailed, full description of the subject or purpose of the module.
+	Helper module for working with Azure DevOps boards. This module uses REST API to connect to Azure DevOps.
+	Your Personal Access Token can be found using this guide: https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate
 
 EXAMPLES
-		Default: Examples of how to use the module or how the subject feature works in practice.
+	Displays this help file:
+	Get-Help about_AzureDevOpsBoardHelper
+	
+	Get the list of available commands:
+	Get-Command -Module AzureDevOpsBoardHelper
 
 KEYWORDS
-		Default: Terms or titles on which you might expect your users to search for the information in this topic.
+	Azure DevOps, Azure, REST API
 
 SEE ALSO
-		Default: Text-only references for further reading. Hyperlinks cannot work in the Windows PowerShell console.
-
+	Go to the Github repository to read about issues, submit a new issue, and read about new releases.
+	https://github.com/Panzerbjrn/AzureDevOpsBoardHelper

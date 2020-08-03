@@ -5,19 +5,25 @@ Function Get-AzDoUserStoryWorkItem
 		This will get a work item.
 
 	.DESCRIPTION
-		This will get a work item.
+		This will get a work item and output it to the console.
 
 	.EXAMPLE
-		Get-AzDOProjects -PersonalAccessToken gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq -Organisation panzerbjrn
+		Get-AzDoUserStoryWorkItem -PersonalAccessToken gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq -Organisation panzerbjrn -Project "Alpha Devs" -WorkItemID 123456
 
 	.EXAMPLE
-		$Projects = (Get-AzDOProjects -PersonalAccessToken $personalToken -Organisation $OrganizationName).value
+		$WItem = Get-AzDoUserStoryWorkItem -PersonalAccessToken $PersonalToken -Organisation $OrganizationName -Project $TeamName -WorkItemID 123456
 
 	.PARAMETER PersonalAccessToken
 		This is your personal access token from Azuree Devops.
 
 	.PARAMETER OrganisationName
 		The name of your Azure Devops Organisation
+
+	.PARAMETER Project
+		The name of your Azure Devops project. Is also often a team name.
+
+	.PARAMETER WorkItemID
+		The ID number of the work item you wish to delete
 
 	.INPUTS
 		Input is from command line or called from a script.

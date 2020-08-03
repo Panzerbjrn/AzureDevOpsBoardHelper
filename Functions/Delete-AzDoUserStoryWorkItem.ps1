@@ -5,14 +5,17 @@ Function Delete-AzDoUserStoryWorkItem
 		This will delete a work item.
 
 	.DESCRIPTION
-		This will delete a work item. Theitem is moved to the recycle binn in case it needs to be restored.
+		This will delete a work item. The item is moved to the recycle binn in case it needs to be restored.
 		The REST API has an option to delete fully, without being able to restore from recycle bin, but that is not implemented here.
 
 	.EXAMPLE
-		Get-AzDOProjects -PersonalAccessToken gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq -Organisation panzerbjrn
+		Delete-AzDoUserStoryWorkItem -PersonalAccessToken 'gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq' -Organisation "panzerbjrn" -Project "Alpha Devs" -WorkItemID 60505
 
 	.EXAMPLE
-		$Projects = (Get-AzDOProjects -PersonalAccessToken $personalToken -Organisation $OrganizationName).value
+		$PAT = 'gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq'
+		$Organisation = "panzerbjrn"
+		$TeamName = "Alpha Devs"
+		Delete-AzDoUserStoryWorkItem -PersonalAccessToken $PAT -Organisation $Organisation -Project $TeamName -WorkItemID 60505
 
 	.PARAMETER PersonalAccessToken
 		This is your personal access token from Azuree Devops.
@@ -21,7 +24,7 @@ Function Delete-AzDoUserStoryWorkItem
 		The name of your Azure Devops Organisation
 
 	.PARAMETER Project
-		The name of your Azure Devops project
+		The name of your Azure Devops project. Is also often a team name.
 
 	.PARAMETER WorkItemID
 		The ID number of the work item you wish to delete

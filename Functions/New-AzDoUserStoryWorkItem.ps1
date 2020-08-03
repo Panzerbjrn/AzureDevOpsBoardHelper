@@ -2,16 +2,21 @@ Function New-AzDoUserStoryWorkItem
 {
 <#
 	.SYNOPSIS
-		Creates a work item of the type, User Story
+		Creates a work item of the type User Story
 
 	.DESCRIPTION
-		Creates a work item of the type, User Story
+		Creates a work item of the type User Story
 
 	.EXAMPLE
-		Give an example of how to use it
+		New-AzDoUserStoryWorkItem -PersonalAccessToken gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq -Organisation panzerbjrn -Project "Alpha Devs" -Title "New Story Item" 
 
 	.EXAMPLE
-		Give another example of how to use it
+		This example first get details from another work item, and uses those to place a new item on the same board.
+		This also uses <br> to break lines in the descrption field.
+		
+		$WItem = Get-AzDoUserStoryWorkItem -PersonalAccessToken $PersonalToken -Organisation $OrganizationName -Project $TeamName -WorkItemID 123456
+		New-AzDoUserStoryWorkItem -PersonalAccessToken $PAT -Organisation $$Organisation -Project $TeamName -Title "Important Scripting work" -Board $WItem.fields.'System.AreaPath' -Description "Important work <br> Line 2" -AssignedTo $WItem.fields.'System.AssignedTo'.displayName -Verbose -Tags "Tag1","Tag2" -AcceptanceCriteria "Accepted"	
+		
 
 	.PARAMETER PersonalAccessToken
 		This is your personal access token from Azuree Devops.
@@ -22,6 +27,30 @@ Function New-AzDoUserStoryWorkItem
 	.PARAMETER ProjectName
 		The name of your Azure Devops Project or Team
 
+	.PARAMETER WorkItemTitle
+		The name of your Azure Devops Project or Team
+
+	.PARAMETER Board
+		The name of your Azure Devops Board you want to add the item to
+
+	.PARAMETER Board
+		The name of your Azure Devops Board you want to add the item to
+
+	.PARAMETER Description
+		The content of the description field. Lines can be broken by adding <br>
+
+	.PARAMETER AcceptanceCriteria
+		The content of the Acceptance Criteria field. Lines can be broken by adding <br>
+
+	.PARAMETER Priority
+		This is the priority of the item. Default is 3.
+
+	.PARAMETER AssignedTo
+		This is the person the item is assigned to.
+
+	.PARAMETER Tags
+		Tags assigned to the work item. These are separated by commas, i.e. "Tag1","Tag2"
+
 	.INPUTS
 		Input is from command line or called from a script.
 
@@ -31,7 +60,7 @@ Function New-AzDoUserStoryWorkItem
 	.NOTES
 		Version:			0.1
 		Author:				Lars Panzerbjørn
-		Creation Date:		2020.05.12
+		Creation Date:		2020.07.31
 		Purpose/Change: Initial script development
 #>
 	[CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
