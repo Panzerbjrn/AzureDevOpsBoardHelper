@@ -61,9 +61,9 @@ Function Get-AzDoUserStoryWorkItem
 	BEGIN
 	{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
+		$JsonContentType = 'application/json-patch+json'
 		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
 		$Header = $AzureDevOpsAuthenicationHeader = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
-		
 		$Uri = "https://dev.azure.com/$Organisation/$Project/_apis/wit/workitems/$WorkItemID`?api-version=5.1"
 
 

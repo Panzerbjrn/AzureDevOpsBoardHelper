@@ -47,7 +47,7 @@ Function Get-AzDOProjects
 	{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 		$Uri = "https://dev.azure.com/$($Organisation)/_apis/projects?api-version=5.1"
-
+		$JsonContentType = 'application/json-patch+json'
 		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
 		$Header = $AzureDevOpsAuthenicationHeader = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
 

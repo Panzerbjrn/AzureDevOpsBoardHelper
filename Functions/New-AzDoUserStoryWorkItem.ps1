@@ -100,7 +100,7 @@ Function New-AzDoUserStoryWorkItem
 	BEGIN
 	{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-
+		$JsonContentType = 'application/json-patch+json'
 		$BaseUri = "https://dev.azure.com/$($Organisation)/"
 		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$User Story?api-version=5.1"
 
