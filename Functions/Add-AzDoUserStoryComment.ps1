@@ -1,8 +1,8 @@
-Function New-AzDoUserStoryWorkItem
+Function Add-AzDoUserStoryComment
 {
 <#
 	.SYNOPSIS
-		Creates a work item of the type User Story
+		Adds a comment to a user story
 
 	.DESCRIPTION
 		Creates a work item of the type User Story
@@ -79,24 +79,11 @@ Function New-AzDoUserStoryWorkItem
 		[string]$Project,
 
 		[Parameter(Mandatory)]
-		[Alias('Title')]
-		[string]$WorkItemTitle,
+		[Alias('WorkItem','ID')]
+		[string]$WorkItemID,
 
 		[Parameter(Mandatory)]
-		[string]$Board,
-
-		[Parameter()][string]$Iteration,
-
-		[Parameter()][string]$Description,
-		
-		[Parameter()][string]$AcceptanceCriteria,
-		
-		[Parameter()][ValidateSet(1,2,3,4)][string]$Priority = 3,
-
-		[Parameter()][string]$AssignedTo,
-		
-		[Parameter()][string[]]$Tags
-
+		[string]$Comment
 	)
 
 	BEGIN
@@ -104,7 +91,7 @@ Function New-AzDoUserStoryWorkItem
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 		$JsonContentType = 'application/json-patch+json'
 		$BaseUri = "https://dev.azure.com/$($Organisation)/"
-		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$User Story?api-version=5.1"
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$WorkItemID`?api-version=5.1-preview.3"
 
 		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
 		$Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
@@ -115,77 +102,12 @@ Function New-AzDoUserStoryWorkItem
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 
 		$Body = @([pscustomobject]@{
-				op = "add"
-				path = '/fields/System.Title'
-				value = $WorkItemTitle
+				text = "Comment"
 			}
 		)
-		$Body += @([pscustomobject]@{
-				op = "add"
-				path = '/fields/System.AreaPath'
-				value = $Board
-			}
-		)
-		
-		$Body += @([pscustomobject]@{
-				op = "add"
-				path = '/fields/Microsoft.VSTS.Common.Priority'
-				value = $Priority
-			}
-		)
-		
-		$Body += @([pscustomobject]@{
-				op = "add"
-				path = '/fields/System.AssignedTo'
-				value = $AssignedTo
-			}
-		)
-		
-		#This may need to have project added in front of the iteration.
-		IF ($Iteration)
-		{
-			$Body += @([pscustomobject]@{
-					op = "add"
-					path = '/fields/System.IterationPath'
-					value = $Iteration
-				}
-			)
-		}
-		
-		IF ($Description)
-		{
-			$Body += @([pscustomobject]@{
-					op = "add"
-					path = '/fields/System.Description'
-					value = $Description
-				}
-			)
-		}
-		
-		IF ($AcceptanceCriteria)
-		{
-			$Body += @([pscustomobject]@{
-					op = "add"
-					path = '/fields/Microsoft.VSTS.Common.AcceptanceCriteria'
-					value = $AcceptanceCriteria
-				}
-			)
-		}
-		
-		IF ($Tags)
-		{
-			ForEach ($Tag in $Tags) {$CombiTag += "$Tag;"}
-			$Body += @([pscustomobject]@{
-					op = "add"
-					path = '/fields/System.Tags'
-					value = $CombiTag
-				}
-			)
-		}
 		$Body = ConvertTo-Json $Body
 		$Body
-		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json-patch+json" -Body $Body
-
+		$Result = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $Header -ContentType $JsonContentType -Body $Body
 	}
 	END
 	{

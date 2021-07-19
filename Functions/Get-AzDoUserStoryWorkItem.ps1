@@ -54,7 +54,10 @@ Function Get-AzDoUserStoryWorkItem
 
 		[Parameter(Mandatory)]
 		[Alias('WorkItem','ID')]
-		[string]$WorkItemID
+		[string]$WorkItemID,
+
+		[Parameter()]
+		[string]$Board
 
 	)
 
