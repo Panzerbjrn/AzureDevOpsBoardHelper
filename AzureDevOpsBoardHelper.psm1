@@ -1,24 +1,4 @@
-#region Script Header
-#	Thought for the day: 
-#	NAME: AzureDevOpsBoardHelper.psm1
-#	AUTHOR: Lars Panzerbjørn
-#	CONTACT: Lars@Panzerbjrn.eu / GitHub: Panzerbjrn / Twitter: Panzerbjrn
-#	DATE: 2020.07.31
-#	VERSION: 0.1 - 2020.07.31 - Module Created with Create-NewModuleStructure by Lars Panzerbj�rn
-#
-#	SYNOPSIS:
-#
-#
-#	DESCRIPTION:
-#	Helper module for working with Azure DevOps boards.
-#
-#	REQUIREMENTS:
-#
-#endregion Script Header
-
-#Requires -Version 4.0
-
-[CmdletBinding(PositionalBinding=$false)]
+﻿[CmdletBinding(PositionalBinding=$false)]
 param()
 
 Write-Verbose $PSScriptRoot
@@ -41,4 +21,3 @@ ForEach ($Import in @($Functions + $Helpers))
 }
 
 Export-ModuleMember -Function $Functions.Basename
-

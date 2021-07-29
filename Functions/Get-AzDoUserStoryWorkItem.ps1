@@ -1,4 +1,4 @@
-Function Get-AzDoUserStoryWorkItem
+﻿Function Get-AzDoUserStoryWorkItem
 {
 <#
 	.SYNOPSIS

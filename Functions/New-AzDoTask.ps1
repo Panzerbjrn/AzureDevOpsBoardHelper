@@ -1,4 +1,4 @@
-Function New-AzDoTask
+﻿Function New-AzDoTask
 {
 <#
 	.SYNOPSIS
@@ -38,7 +38,6 @@ Function New-AzDoTask
 		This will output the logfile.
 
 	.NOTES
-		Version:			1.1
 		Author:				Lars Panzerbjørn
 		Creation Date:		2020.07.31
 		Purpose/Change: Initial script development
@@ -63,11 +62,11 @@ Function New-AzDoTask
 		[string]$TaskTitle,
 
 		[Parameter()][string]$Board,
-		
+
 		[Parameter()][string]$AssignedTo,
-		
+
 		[Parameter()][string]$Description,
-		
+
 		[Parameter(Mandatory)]
 		[string]$ParentItemID
 	)
@@ -94,19 +93,19 @@ Function New-AzDoTask
 				value = $TaskTitle
 			}
 		)
-		
+
 		IF ($Board){$BoardValue = $Board}
-		ELSE {$BoardValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentID -PersonalAccessToken $PersonalAccessToken -Project $Project).Fields.'System.AreaPath'}
+		ELSE {$BoardValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentItemID -PersonalAccessToken $PersonalAccessToken -Project $Project).Fields.'System.AreaPath'}
 		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/System.AreaPath'
 				value = $BoardValue
 			}
 		)
-	
-		
+
+
 		IF ($AssignedTo){$AssignedToValue = $AssignedTo}
-		ELSE {$AssignedToValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentID -PersonalAccessToken $PersonalAccessToken -Project $Project).Fields.'System.Assignedto'.displayName}
+		ELSE {$AssignedToValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentItemID -PersonalAccessToken $PersonalAccessToken -Project $Project).Fields.'System.Assignedto'.displayName}
 		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/System.AssignedTo'
@@ -123,11 +122,11 @@ Function New-AzDoTask
 				}
 			)
 		}
-		
+
 		$Body = ConvertTo-Json $Body
 		$Body
 		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json-patch+json" -Body $Body
-		
+
 		IF (($ParentItemID) -and ($Result.id)){
 			Link-AzDoItems -PersonalAccessToken $PersonalAccessToken -Organisation $Organisation -Project $Project -ParentItemID $ParentItemID -ChildItemID $Result.id -Verbose
 		}

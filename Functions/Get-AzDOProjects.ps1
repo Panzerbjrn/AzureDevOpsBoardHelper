@@ -1,4 +1,4 @@
-Function Get-AzDOProjects
+﻿Function Get-AzDOProjects
 {
 <#
 	.SYNOPSIS
@@ -49,7 +49,7 @@ Function Get-AzDOProjects
 		$Uri = "https://dev.azure.com/$($Organisation)/_apis/projects?api-version=5.1"
 		$JsonContentType = 'application/json-patch+json'
 		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
-		$Header = $AzureDevOpsAuthenicationHeader = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
+		$Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
 
 	}
 

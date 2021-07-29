@@ -1,4 +1,4 @@
-Function New-AzDoUserStoryWorkItem
+﻿Function New-AzDoUserStoryWorkItem
 {
 <#
 	.SYNOPSIS
@@ -8,15 +8,15 @@ Function New-AzDoUserStoryWorkItem
 		Creates a work item of the type User Story
 
 	.EXAMPLE
-		New-AzDoUserStoryWorkItem -PersonalAccessToken gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq -Organisation panzerbjrn -Project "Alpha Devs" -Title "New Story Item" 
+		New-AzDoUserStoryWorkItem -PersonalAccessToken gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq -Organisation panzerbjrn -Project "Alpha Devs" -Title "New Story Item"
 
 	.EXAMPLE
 		This example first get details from another work item, and uses those to place a new item on the same board.
 		This also uses <br> to break lines in the descrption field.
-		
+
 		$WItem = Get-AzDoUserStoryWorkItem -PersonalAccessToken $PersonalToken -Organisation $OrganizationName -Project $TeamName -WorkItemID 123456
-		New-AzDoUserStoryWorkItem -PersonalAccessToken $PAT -Organisation $$Organisation -Project $TeamName -Title "Important Scripting work" -Board $WItem.fields.'System.AreaPath' -Description "Important work <br> Line 2" -AssignedTo $WItem.fields.'System.AssignedTo'.displayName -Verbose -Tags "Tag1","Tag2" -AcceptanceCriteria "Accepted"	
-		
+		New-AzDoUserStoryWorkItem -PersonalAccessToken $PAT -Organisation $$Organisation -Project $TeamName -Title "Important Scripting work" -Board $WItem.fields.'System.AreaPath' -Description "Important work <br> Line 2" -AssignedTo $WItem.fields.'System.AssignedTo'.displayName -Verbose -Tags "Tag1","Tag2" -AcceptanceCriteria "Accepted"
+
 
 	.PARAMETER PersonalAccessToken
 		This is your personal access token from Azuree Devops.
@@ -29,9 +29,6 @@ Function New-AzDoUserStoryWorkItem
 
 	.PARAMETER WorkItemTitle
 		The name of your Azure Devops Project or Team
-
-	.PARAMETER Board
-		The name of your Azure Devops Board you want to add the item to
 
 	.PARAMETER Board
 		The name of your Azure Devops Board you want to add the item to
@@ -88,13 +85,13 @@ Function New-AzDoUserStoryWorkItem
 		[Parameter()][string]$Iteration,
 
 		[Parameter()][string]$Description,
-		
+
 		[Parameter()][string]$AcceptanceCriteria,
-		
+
 		[Parameter()][ValidateSet(1,2,3,4)][string]$Priority = 3,
 
 		[Parameter()][string]$AssignedTo,
-		
+
 		[Parameter()][string[]]$Tags
 
 	)
@@ -126,21 +123,21 @@ Function New-AzDoUserStoryWorkItem
 				value = $Board
 			}
 		)
-		
+
 		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/Microsoft.VSTS.Common.Priority'
 				value = $Priority
 			}
 		)
-		
+
 		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/System.AssignedTo'
 				value = $AssignedTo
 			}
 		)
-		
+
 		#This may need to have project added in front of the iteration.
 		IF ($Iteration)
 		{
@@ -151,7 +148,7 @@ Function New-AzDoUserStoryWorkItem
 				}
 			)
 		}
-		
+
 		IF ($Description)
 		{
 			$Body += @([pscustomobject]@{
@@ -161,7 +158,7 @@ Function New-AzDoUserStoryWorkItem
 				}
 			)
 		}
-		
+
 		IF ($AcceptanceCriteria)
 		{
 			$Body += @([pscustomobject]@{
@@ -171,7 +168,7 @@ Function New-AzDoUserStoryWorkItem
 				}
 			)
 		}
-		
+
 		IF ($Tags)
 		{
 			ForEach ($Tag in $Tags) {$CombiTag += "$Tag;"}
