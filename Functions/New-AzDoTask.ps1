@@ -38,6 +38,7 @@
 		This will output the logfile.
 
 	.NOTES
+		Version:			1.1
 		Author:				Lars Panzerbjørn
 		Creation Date:		2020.07.31
 		Purpose/Change: Initial script development
@@ -95,7 +96,7 @@
 		)
 
 		IF ($Board){$BoardValue = $Board}
-		ELSE {$BoardValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentItemID -PersonalAccessToken $PersonalAccessToken -Project $Project).Fields.'System.AreaPath'}
+		ELSE {$BoardValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentID -PersonalAccessToken $PersonalAccessToken -Project $Project).Fields.'System.AreaPath'}
 		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/System.AreaPath'
@@ -105,7 +106,7 @@
 
 
 		IF ($AssignedTo){$AssignedToValue = $AssignedTo}
-		ELSE {$AssignedToValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentItemID -PersonalAccessToken $PersonalAccessToken -Project $Project).Fields.'System.Assignedto'.displayName}
+		ELSE {$AssignedToValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentID -PersonalAccessToken $PersonalAccessToken -Project $Project).Fields.'System.Assignedto'.displayName}
 		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/System.AssignedTo'
