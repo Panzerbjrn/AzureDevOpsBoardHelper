@@ -1,5 +1,4 @@
-﻿Function Connect-AzDoItems
-{
+﻿Function Connect-AzDoItems{
 <#
 	.SYNOPSIS
 		Links two Azure Devops item in a parent/child relationship
