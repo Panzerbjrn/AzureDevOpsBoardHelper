@@ -11,7 +11,7 @@
 	RootModule = 'AzureDevOpsBoardHelper.psm1'
 
 	# Version number of this module.
-	ModuleVersion = '1.0.2'
+	ModuleVersion = '1.0.3'
 
 	# ID used to uniquely identify this module
 	GUID = '24bf92e5-7cd8-4153-bd6f-55422c162722'
@@ -26,7 +26,7 @@
 	Copyright = '(c) 2019 Lars Panzerbjørn. All rights reserved.'
 
 	# Description of the functionality provided by this module
-	Description = 'This module will help with certain operations on your Azure DevOps board. Especially batch creating new items, or scheduling repeated tasks, etc. Feel free to get in touch via GitHub if there's anything you'd like to see added.'
+	Description = 'This module will help with certain operations on your Azure DevOps board. Especially batch creating new items, or scheduling repeated tasks, etc. Feel free to get in touch via GitHub if there is anything you would like to see added.'
 
 	# Minimum version of the Windows PowerShell engine required by this module
 	PowerShellVersion = '5.0'
