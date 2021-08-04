@@ -36,7 +36,7 @@
 		Creation Date:		2020.07.31
 		Purpose/Change: Initial script development
 #>
-	[CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
+	[CmdletBinding()]
 	param
 	(
 		[Parameter(Mandatory)]

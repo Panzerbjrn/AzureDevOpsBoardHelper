@@ -1,4 +1,4 @@
-﻿Function New-AzDoTask
+﻿Function Add-AzDoTask
 {
 <#
 	.SYNOPSIS
@@ -42,7 +42,7 @@
 		Creation Date:		2020.07.31
 		Purpose/Change: Initial script development
 #>
-	[CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
+	[CmdletBinding()]
 	param
 	(
 		[Parameter(Mandatory)]
@@ -128,7 +128,7 @@
 		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json-patch+json" -Body $Body
 
 		IF (($ParentItemID) -and ($Result.id)){
-			Link-AzDoItems -PersonalAccessToken $PersonalAccessToken -Organisation $Organisation -Project $Project -ParentItemID $ParentItemID -ChildItemID $Result.id -Verbose
+			Connect-AzDoItems -PersonalAccessToken $PersonalAccessToken -Organisation $Organisation -Project $Project -ParentItemID $ParentItemID -ChildItemID $Result.id -Verbose
 		}
 
 	}

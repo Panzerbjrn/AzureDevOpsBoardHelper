@@ -1,4 +1,4 @@
-﻿Function New-AzDoUserStoryWorkItem
+﻿Function Add-AzDoUserStoryWorkItem
 {
 <#
 	.SYNOPSIS
@@ -8,14 +8,14 @@
 		Creates a work item of the type User Story
 
 	.EXAMPLE
-		New-AzDoUserStoryWorkItem -PersonalAccessToken gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq -Organisation panzerbjrn -Project "Alpha Devs" -Title "New Story Item"
+		Add-AzDoUserStoryWorkItem -PersonalAccessToken gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq -Organisation panzerbjrn -Project "Alpha Devs" -Title "New Story Item"
 
 	.EXAMPLE
 		This example first get details from another work item, and uses those to place a new item on the same board.
 		This also uses <br> to break lines in the descrption field.
 
 		$WItem = Get-AzDoUserStoryWorkItem -PersonalAccessToken $PersonalToken -Organisation $OrganizationName -Project $TeamName -WorkItemID 123456
-		New-AzDoUserStoryWorkItem -PersonalAccessToken $PAT -Organisation $$Organisation -Project $TeamName -Title "Important Scripting work" -Board $WItem.fields.'System.AreaPath' -Description "Important work <br> Line 2" -AssignedTo $WItem.fields.'System.AssignedTo'.displayName -Verbose -Tags "Tag1","Tag2" -AcceptanceCriteria "Accepted"
+		Add-AzDoUserStoryWorkItem -PersonalAccessToken $PAT -Organisation $$Organisation -Project $TeamName -Title "Important Scripting work" -Board $WItem.fields.'System.AreaPath' -Description "Important work <br> Line 2" -AssignedTo $WItem.fields.'System.AssignedTo'.displayName -Verbose -Tags "Tag1","Tag2" -AcceptanceCriteria "Accepted"
 
 
 	.PARAMETER PersonalAccessToken
@@ -60,7 +60,7 @@
 		Creation Date:		2020.07.31
 		Purpose/Change: Initial script development
 #>
-	[CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
+	[CmdletBinding()]
 	param
 	(
 		[Parameter(Mandatory)]
