@@ -22,21 +22,19 @@ function ConvertFrom-JsonToHashtable {
 		if the JSON string has different keys but of the same name, e.g. 'size' and 'Size' the comversion will fail.
 		Additionally to turn a PSCustomObject into a hashtable requires another function to perform the operation.
 		This function does all the work in step using the JavaScriptSerializer .NET class
-		
+
 	.EXAMPLE
 		ConvertFrom-JsonToHashtable $JSON
 #>
 
 	[CmdletBinding()]
 	param(
-
-		[Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)]
+		[Parameter(Mandatory)]
 		[AllowNull()]
-		[string]
-		$InputObject,
+		[string]$InputObject,
 
-		[switch]
 		# Switch to denote that the returning object should be case sensitive
+		[switch]
 		$casesensitive
 	)
 

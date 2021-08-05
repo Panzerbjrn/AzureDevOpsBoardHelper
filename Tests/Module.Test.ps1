@@ -37,7 +37,7 @@ Describe "General project validation: $ModuleName" {
 }
 
 Describe "General function validation: $ModuleName" {
-	$Scripts = Get-ChildItem $ProjectRoot -Include *.ps1 -Exclude *WiP.ps1 -Recurse
+	$Scripts = Get-ChildItem $ProjectRoot -Include *.ps1 -Exclude *WiP.ps1,*test.ps1 -Recurse
 
 	# TestCases are splatted to the script
 	$TestCase = $Scripts | Foreach-Object {@{file=$_}}
