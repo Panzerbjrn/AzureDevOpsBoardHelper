@@ -11,7 +11,7 @@
 	RootModule = 'AzureDevOpsBoardHelper.psm1'
 
 	# Version number of this module.
-	ModuleVersion = '1.0.3'
+	ModuleVersion = '2.0.1'
 
 	# ID used to uniquely identify this module
 	GUID = '24bf92e5-7cd8-4153-bd6f-55422c162722'
