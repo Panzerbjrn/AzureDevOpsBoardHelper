@@ -1,5 +1,4 @@
-﻿Function Remove-AzDoUserStoryWorkItem
-{
+﻿Function Remove-AzDoUserStoryWorkItem{
 <#
 	.SYNOPSIS
 		This will delete a work item.
@@ -42,8 +41,7 @@
 		Purpose/Change: Initial script development
 #>
 	[CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
-	param
-	(
+	param(
 		[Parameter(Mandatory)]
 		[Alias('PAT')]
 		[string]$PersonalAccessToken,
@@ -61,23 +59,20 @@
 		[string]$WorkItemID
 
 	)
-	BEGIN
-	{
+	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
 		$AzureDevOpsAuthenicationHeader = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
 		$Uri = "https://dev.azure.com/$Organisation/$Project/_apis/wit/workitems/$($workItemId)?api-version=5.1"
 	}
 
-	PROCESS
-	{
+	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 		IF($PSCmdlet.ShouldProcess()){
 			$WItem = Invoke-RestMethod -Uri $uri -Method DELETE -Headers $AzureDevOpsAuthenicationHeader	#This deletes the Work item
 		}
 	}
-	END
-	{
+	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
 		$WItem
 	}
