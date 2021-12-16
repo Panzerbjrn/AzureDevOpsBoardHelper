@@ -114,5 +114,5 @@ Remove-AzDoUserStoryWorkItem:InformationVariable
 Remove-AzDoUserStoryWorkItem:OutVariable
 Remove-AzDoUserStoryWorkItem:OutBuffer
 Remove-AzDoUserStoryWorkItem:PipelineVariable
-Remove-AzDoUserStoryWorkItem:WhatIf
 Remove-AzDoUserStoryWorkItem:Confirm
+Remove-AzDoUserStoryWorkItem:WhatIf
