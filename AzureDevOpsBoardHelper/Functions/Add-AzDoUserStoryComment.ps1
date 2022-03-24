@@ -81,6 +81,9 @@
 		[Alias('WorkItem','ID')]
 		[string]$WorkItemID,
 
+		[Parameter()]
+		[string]$Board,
+
 		[Parameter(Mandatory)]
 		[string]$Comment
 	)
