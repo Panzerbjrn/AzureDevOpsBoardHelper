@@ -91,7 +91,8 @@
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 		$JsonContentType = 'application/json-patch+json'
 		$BaseUri = "https://dev.azure.com/$($Organisation)/"
-		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$WorkItemID`?api-version=5.1-preview.3"
+		#$Uri = $BaseUri + "$Project/_apis/wit/workitems/$WorkItemID`?api-version=5.1-preview.3"
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$WorkItemID`?api-version=6.0-preview.3"
 
 		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
 		$Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
@@ -103,6 +104,7 @@
 
 		$Body = @([pscustomobject]@{
 				text = $Comment
+				path = '/fields/System.Comment'
 			}
 		)
 		$Body = ConvertTo-Json $Body
