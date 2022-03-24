@@ -1,5 +1,4 @@
-﻿Function Add-AzDoUserStoryComment
-{
+﻿Function Add-AzDoUserStoryComment{
 <#
 	.SYNOPSIS
 		Adds a comment to a user story
@@ -103,10 +102,10 @@
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 
 		$Body = @([pscustomobject]@{
-				text = $Comment
-				path = '/fields/System.Comment'
-			}
-		)
+			op = "add"
+			path = '/fields/System.History'
+			value = $Comment
+		})
 		$Body = ConvertTo-Json $Body
 		$Body
 		$Result = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $Header -ContentType $JsonContentType -Body $Body
