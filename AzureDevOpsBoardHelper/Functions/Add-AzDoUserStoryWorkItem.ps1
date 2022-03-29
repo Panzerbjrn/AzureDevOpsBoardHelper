@@ -83,7 +83,7 @@
 		[string]$Board,
 
 		[Parameter(Mandatory)]
-		[Parameter()][ValidateSet("Issue","User Story")]
+		[ValidateSet("Issue","User Story")]
 		[string]$StoryType,
 
 		[Parameter()][string]$Iteration,
