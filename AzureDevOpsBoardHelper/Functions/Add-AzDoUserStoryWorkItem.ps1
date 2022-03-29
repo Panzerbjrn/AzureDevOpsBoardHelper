@@ -1,5 +1,4 @@
-﻿Function Add-AzDoUserStoryWorkItem
-{
+﻿Function Add-AzDoUserStoryWorkItem{
 <#
 	.SYNOPSIS
 		Creates a work item of the type User Story
@@ -61,8 +60,7 @@
 		Purpose/Change: Initial script development
 #>
 	[CmdletBinding()]
-	param
-	(
+	param(
 		[Parameter(Mandatory)]
 		[Alias('PAT')]
 		[string]$PersonalAccessToken,
@@ -97,22 +95,19 @@
 		[Parameter()][string]$AssignedTo,
 
 		[Parameter()][string[]]$Tags
-
 	)
 
-	BEGIN
-	{
+	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 		$JsonContentType = 'application/json-patch+json'
 		$BaseUri = "https://dev.azure.com/$($Organisation)/"
-		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$$StoryType?api-version=5.1"
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$$($StoryType)?api-version=5.1"
 
 		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
 		$Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
 	}
 
-	PROCESS
-	{
+	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 
 		$Body = @([pscustomobject]@{
@@ -185,12 +180,12 @@
 		}
 		$Body = ConvertTo-Json $Body
 		$Body
-		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json-patch+json" -Body $Body
+		Write-Verbose -Message "$uri"
+		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $Body
 
 	}
-	END
-	{
-		Write-Verbose "Ending $($MyInvocation.Mycommand)"
+	END{
+		Write-Verbose -Message "Ending $($MyInvocation.Mycommand)"
 		#$Body
 		$Result
 	}
