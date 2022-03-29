@@ -82,6 +82,10 @@
 		[Parameter(Mandatory)]
 		[string]$Board,
 
+		[Parameter(Mandatory)]
+		[Parameter()][ValidateSet("Issue","User Story")]
+		[string]$StoryType,
+
 		[Parameter()][string]$Iteration,
 
 		[Parameter()][string]$Description,
@@ -101,7 +105,7 @@
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 		$JsonContentType = 'application/json-patch+json'
 		$BaseUri = "https://dev.azure.com/$($Organisation)/"
-		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$User Story?api-version=5.1"
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$$StoryType?api-version=5.1"
 
 		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
 		$Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
