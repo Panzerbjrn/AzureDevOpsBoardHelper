@@ -21,6 +21,7 @@ Add-AzDoUserStoryComment:PersonalAccessToken
 Add-AzDoUserStoryComment:Organisation
 Add-AzDoUserStoryComment:Project
 Add-AzDoUserStoryComment:WorkItemID
+Add-AzDoUserStoryComment:Board
 Add-AzDoUserStoryComment:Comment
 Add-AzDoUserStoryComment:Verbose
 Add-AzDoUserStoryComment:Debug
@@ -38,6 +39,7 @@ Add-AzDoUserStoryWorkItem:Organisation
 Add-AzDoUserStoryWorkItem:Project
 Add-AzDoUserStoryWorkItem:WorkItemTitle
 Add-AzDoUserStoryWorkItem:Board
+Add-AzDoUserStoryWorkItem:StoryType
 Add-AzDoUserStoryWorkItem:Iteration
 Add-AzDoUserStoryWorkItem:Description
 Add-AzDoUserStoryWorkItem:AcceptanceCriteria
