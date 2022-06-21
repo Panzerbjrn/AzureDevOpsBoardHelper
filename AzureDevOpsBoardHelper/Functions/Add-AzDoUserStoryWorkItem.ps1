@@ -54,7 +54,6 @@
 		This will output the logfile.
 
 	.NOTES
-		Version:			0.1
 		Author:				Lars Panzerbjørn
 		Creation Date:		2020.07.31
 		Purpose/Change: Initial script development
@@ -81,7 +80,7 @@
 		[string]$Board,
 
 		[Parameter(Mandatory)]
-		[ValidateSet("Issue","User Story")]
+		[ValidateSet("Issue","User Story","Bug")]
 		[string]$StoryType,
 
 		[Parameter()][string]$Iteration,
