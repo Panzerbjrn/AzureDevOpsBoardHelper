@@ -8,14 +8,11 @@ $Functions	= @( Get-ChildItem -Path $PSScriptRoot\Functions\*.ps1 -ErrorAction S
 $Helpers = @( Get-ChildItem -Path $PSScriptRoot\Helpers\*.ps1 -ErrorAction SilentlyContinue )
 
 #Dot source the files
-ForEach ($Import in @($Functions + $Helpers))
-{
-	Try
-	{
+ForEach ($Import in @($Functions + $Helpers)){
+	Try{
 		. $Import.Fullname
 	}
-	Catch
-	{
+	Catch{
 		Write-Error -Message "Failed to Import function $($Import.Fullname): $_"
 	}
 }
