@@ -71,8 +71,7 @@
 		[string]$ParentItemID
 	)
 
-	BEGIN
-	{
+	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 		$JsonContentType = 'application/json-patch+json'
 		$BaseUri = "https://dev.azure.com/$($Organisation)/"
@@ -82,8 +81,7 @@
 		$Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
 	}
 
-	PROCESS
-	{
+	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 
 		$Body = @([pscustomobject]@{
