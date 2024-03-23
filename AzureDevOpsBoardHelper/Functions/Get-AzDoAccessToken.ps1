@@ -60,14 +60,11 @@ Function Get-AzDoAccessToken{
 		[string]$Project,
 	)
 
-	BEGIN{
-		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
+		Write-Verbose "Starting $($MyInvocation.Mycommand)"
 		$JsonContentType = 'application/json-patch+json'
 		$BaseUri = "https://dev.azure.com/$($Organisation)/"
 
 		$Script:Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
 		$Script:Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
-
-		Return $TokenResponse
 }
 
