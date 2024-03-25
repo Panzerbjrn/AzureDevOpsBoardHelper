@@ -42,11 +42,22 @@ Function Run-AzDOPipeline{
 	}
 
 	PROCESS{
+        $runParameters = @{
+            resources = @{
+                repositories = @{
+                    self = @{
+                        refName = "refs/heads/master"
+                    }
+                }
+            }
+        }
+        $JsonBody = $runParameters | ConvertTo-Json
+
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
-		$Run = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header		#Runs a Pipeline
+		$Run = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $JsonBody	#Runs a Pipeline
 	}
 	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
-		$Run.Value
+		$Run
 	}
 }
