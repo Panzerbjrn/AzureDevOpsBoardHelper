@@ -6,12 +6,6 @@
 	.DESCRIPTION
 		Links two Azure Devops item in a parent/child relationship
 
-	.EXAMPLE
-
-
-	.PARAMETER PersonalAccessToken
-		This is your personal access token from Azure Devops.
-
 	.PARAMETER OrganizationName
 		The name of your Azure Devops Organisation
 
@@ -31,18 +25,11 @@
 		This will output the logfile.
 
 	.NOTES
-		Version:			0.1
 		Author:				Lars Panzerbjørn
 		Creation Date:		2020.07.31
-		Purpose/Change: Initial script development
 #>
 	[CmdletBinding()]
-	param
-	(
-		[Parameter(Mandatory)]
-		[Alias('PAT')]
-		[string]$PersonalAccessToken,
-
+	param(
 		[Parameter(Mandatory)]
 		[Alias('Company')]
 		[string]$Organisation,
@@ -55,20 +42,12 @@
 		[Parameter(Mandatory)][string]$ChildItemID
 	)
 
-	BEGIN
-	{
+	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-		$JsonContentType = 'application/json-patch+json'
-		$BaseUri = "https://dev.azure.com/$($Organisation)/"
-		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$ChildItemID`?api-version=6.1-preview.3"
-
-
-		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
-		$Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$ChildItemID`?api-version=7.0"
 	}
 
-	PROCESS
-	{
+	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 		$Value = @{
 			rel = "System.LinkTypes.Hierarchy-Reverse"
@@ -93,8 +72,7 @@
 		$Result = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $Header -ContentType $JsonContentType -Body $Body
 
 	}
-	END
-	{
+	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
 		#$Body
 		$Result

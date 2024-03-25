@@ -1,5 +1,4 @@
-﻿Function Add-AzDoTask
-{
+﻿Function Add-AzDoTask{
 <#
 	.SYNOPSIS
 		Creates a work item of the type Task
@@ -9,9 +8,6 @@
 
 	.EXAMPLE
 		New-AzDoTask -PersonalAccessToken $PAT -Organisation $Organisation -Project $Project -TaskTitle "Test Task" -Board $Board -Description "Test Description"
-
-	.PARAMETER PersonalAccessToken
-		This is your personal access token from Azuree Devops.
 
 	.PARAMETER OrganizationName
 		The name of your Azure Devops Organisation
@@ -43,12 +39,7 @@
 		Purpose/Change: Initial script development
 #>
 	[CmdletBinding()]
-	param
-	(
-		[Parameter(Mandatory)]
-		[Alias('PAT')]
-		[string]$PersonalAccessToken,
-
+	param(
 		[Parameter(Mandatory)]
 		[Alias('Company')]
 		[string]$Organisation,
@@ -73,12 +64,7 @@
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-		$JsonContentType = 'application/json-patch+json'
-		$BaseUri = "https://dev.azure.com/$($Organisation)/"
 		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$Task?api-version=6.0"
-
-		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
-		$Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
 	}
 
 	PROCESS{
@@ -93,7 +79,7 @@
 		)
 
 		IF ($Board){$BoardValue = $Board}
-		ELSE {$BoardValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentItemID -PersonalAccessToken $PersonalAccessToken -Project $Project).Fields.'System.AreaPath'}
+		ELSE {$BoardValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentItemID -Project $Project).Fields.'System.AreaPath'}
 		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/System.AreaPath'
@@ -103,7 +89,7 @@
 
 
 		IF ($AssignedTo){$AssignedToValue = $AssignedTo}
-		ELSE {$AssignedToValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentItemID -PersonalAccessToken $PersonalAccessToken -Project $Project).Fields.'System.Assignedto'.displayName}
+		ELSE {$AssignedToValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentItemID -Project $Project).Fields.'System.Assignedto'.displayName}
 		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/System.AssignedTo'
@@ -126,12 +112,11 @@
 		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json-patch+json" -Body $Body
 
 		IF (($ParentItemID) -and ($Result.id)){
-			Connect-AzDoItems -PersonalAccessToken $PersonalAccessToken -Organisation $Organisation -Project $Project -ParentItemID $ParentItemID -ChildItemID $Result.id -Verbose
+			Connect-AzDoItems -Organisation $Organisation -Project $Project -ParentItemID $ParentItemID -ChildItemID $Result.id -Verbose
 		}
 
 	}
-	END
-	{
+	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
 		#$Body
 		$Result

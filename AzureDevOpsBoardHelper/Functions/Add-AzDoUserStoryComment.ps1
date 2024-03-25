@@ -7,18 +7,14 @@
 		Creates a work item of the type User Story
 
 	.EXAMPLE
-		New-AzDoUserStoryWorkItem -PersonalAccessToken gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq -Organisation panzerbjrn -Project "Alpha Devs" -Title "New Story Item"
+		New-AzDoUserStoryWorkItem -Organisation panzerbjrn -Project "Alpha Devs" -Title "New Story Item"
 
 	.EXAMPLE
 		This example first get details from another work item, and uses those to place a new item on the same board.
 		This also uses <br> to break lines in the descrption field.
 
-		$WItem = Get-AzDoUserStoryWorkItem -PersonalAccessToken $PersonalToken -Organisation $OrganizationName -Project $TeamName -WorkItemID 123456
-		New-AzDoUserStoryWorkItem -PersonalAccessToken $PAT -Organisation $$Organisation -Project $TeamName -Title "Important Scripting work" -Board $WItem.fields.'System.AreaPath' -Description "Important work <br> Line 2" -AssignedTo $WItem.fields.'System.AssignedTo'.displayName -Verbose -Tags "Tag1","Tag2" -AcceptanceCriteria "Accepted"
-
-
-	.PARAMETER PersonalAccessToken
-		This is your personal access token from Azuree Devops.
+		$WItem = Get-AzDoUserStoryWorkItem -Organisation $OrganizationName -Project $TeamName -WorkItemID 123456
+		New-AzDoUserStoryWorkItem  -Organisation $$Organisation -Project $TeamName -Title "Important Scripting work" -Board $WItem.fields.'System.AreaPath' -Description "Important work <br> Line 2" -AssignedTo $WItem.fields.'System.AssignedTo'.displayName -Verbose -Tags "Tag1","Tag2" -AcceptanceCriteria "Accepted"
 
 	.PARAMETER OrganizationName
 		The name of your Azure Devops Organisation
@@ -63,12 +59,7 @@
 		Purpose/Change: Initial script development
 #>
 	[CmdletBinding()]
-	param
-	(
-		[Parameter(Mandatory)]
-		[Alias('PAT')]
-		[string]$PersonalAccessToken,
-
+	param(
 		[Parameter(Mandatory)]
 		[Alias('Company')]
 		[string]$Organisation,
@@ -88,20 +79,12 @@
 		[string]$Comment
 	)
 
-	BEGIN
-	{
+	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-		$JsonContentType = 'application/json-patch+json'
-		$BaseUri = "https://dev.azure.com/$($Organisation)/"
-		#$Uri = $BaseUri + "$Project/_apis/wit/workitems/$WorkItemID`?api-version=5.1-preview.3"
-		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$WorkItemID`?api-version=6.0-preview.3"
-
-		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
-		$Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$WorkItemID`?api-version=7.0"
 	}
 
-	PROCESS
-	{
+	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 
 		$Body = @([pscustomobject]@{
@@ -113,8 +96,7 @@
 		$Body
 		$Result = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $Header -ContentType $JsonContentType -Body $Body
 	}
-	END
-	{
+	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
 		#$Body
 		$Result
