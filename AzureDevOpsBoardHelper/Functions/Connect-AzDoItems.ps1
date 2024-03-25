@@ -6,9 +6,6 @@
 	.DESCRIPTION
 		Links two Azure Devops item in a parent/child relationship
 
-	.PARAMETER OrganizationName
-		The name of your Azure Devops Organisation
-
 	.PARAMETER ProjectName
 		The name of your Azure Devops Project or Team
 
@@ -31,10 +28,6 @@
 	[CmdletBinding()]
 	param(
 		[Parameter(Mandatory)]
-		[Alias('Company')]
-		[string]$Organisation,
-
-		[Parameter(Mandatory)]
 		[Alias('TeamName')]
 		[string]$Project,
 
@@ -51,7 +44,7 @@
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 		$Value = @{
 			rel = "System.LinkTypes.Hierarchy-Reverse"
-			url = "https://dev.azure.com/$Organisation/$Project/_apis/wit/workItems/$ParentItemID"
+			url = $BaseUri + "$Project/_apis/wit/workItems/$ParentItemID"
 			}
 		$Attributes = @{
 			isLocked = $False

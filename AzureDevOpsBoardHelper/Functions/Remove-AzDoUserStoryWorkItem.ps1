@@ -8,13 +8,11 @@
 		The REST API has an option to delete fully, without being able to restore from recycle bin, but that is not implemented here.
 
 	.EXAMPLE
-		Remove-AzDoUserStoryWorkItem -PersonalAccessToken 'gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq' -Organisation "panzerbjrn" -Project "Alpha Devs" -WorkItemID 60505
+		Remove-AzDoUserStoryWorkItem -Project "Alpha Devs" -WorkItemID 60505
 
 	.EXAMPLE
-		$PAT = 'gh5553hiih5lfewahq7n3g7x7oieuothushimanuoch8szn3u2sq'
-		$Organisation = "panzerbjrn"
 		$TeamName = "Alpha Devs"
-		Remove-AzDoUserStoryWorkItem -PersonalAccessToken $PAT -Organisation $Organisation -Project $TeamName -WorkItemID 60505
+		Remove-AzDoUserStoryWorkItem -Project $TeamName -WorkItemID 60505
 
 	.PARAMETER PersonalAccessToken
 		This is your personal access token from Azuree Devops.
@@ -35,21 +33,11 @@
 		This will output the item being deleted.
 
 	.NOTES
-		Version:			1
 		Author:				Lars Panzerbjørn
 		Creation Date:		2020.07.31
-		Purpose/Change: Initial script development
 #>
 	[CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
 	param(
-		[Parameter(Mandatory)]
-		[Alias('PAT')]
-		[string]$PersonalAccessToken,
-
-		[Parameter(Mandatory)]
-		[Alias('Company')]
-		[string]$Organisation,
-
 		[Parameter(Mandatory)]
 		[Alias('TeamName')]
 		[string]$Project,
@@ -61,15 +49,13 @@
 	)
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-		$Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
-		$AzureDevOpsAuthenicationHeader = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
-		$Uri = "https://dev.azure.com/$Organisation/$Project/_apis/wit/workitems/$($workItemId)?api-version=5.1"
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$($workItemId)?api-version=7.0"
 	}
 
 	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 		IF($PSCmdlet.ShouldProcess()){
-			$WItem = Invoke-RestMethod -Uri $uri -Method DELETE -Headers $AzureDevOpsAuthenicationHeader	#This deletes the Work item
+			$WItem = Invoke-RestMethod -Uri $uri -Method DELETE -Headers $Header	#This deletes the Work item
 		}
 	}
 	END{
