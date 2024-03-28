@@ -57,7 +57,7 @@ Function Get-AzDoAccessToken{
 
 		[Parameter(Mandatory)]
 		[Alias('TeamName')]
-		[string]$Project,
+		[string]$Project
 	)
 
 		Write-Verbose "Starting $($MyInvocation.Mycommand)"
