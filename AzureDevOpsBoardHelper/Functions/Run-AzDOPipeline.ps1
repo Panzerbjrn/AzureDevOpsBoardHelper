@@ -37,7 +37,6 @@ Function Run-AzDOPipeline{
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-        $Uri = $BaseUri + "$Project/_apis/pipelines?api-version=7.0"
         $Uri = $BaseUri + "$Project/_apis/pipelines/$PipelineID/runs?api-version=7.0"
 	}
 
