@@ -66,5 +66,6 @@ Function Get-AzDoAccessToken{
 		$Script:JsonContentType = 'application/json-patch+json'
 		$Script:Token = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$($PersonalAccessToken)"))
 		$Script:Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
+		Write-Verbose "Token is: $($Token)"
 }
 
