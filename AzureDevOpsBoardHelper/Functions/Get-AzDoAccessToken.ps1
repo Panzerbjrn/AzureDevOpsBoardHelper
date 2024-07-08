@@ -71,4 +71,3 @@ Function Get-AzDoAccessToken{
 		$Script:Header = @{Authorization = 'Basic ' + $Token;accept=$JsonContentType}
 		Write-Verbose "Token is: $($Token)"
 }
-
