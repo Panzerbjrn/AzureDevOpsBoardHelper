@@ -7,38 +7,38 @@ Function Get-AzDoAccessToken{
 		Gets the bearer token needed for REST API calls. This token is saved to the script scope.
 
 	.EXAMPLE
-		$TenantId = "c123456f-a1cd-6fv7-bh73-123r5t6y7u8i9"
-		$ClientId = '1a2s3d4d4-dfhg-4567-d5f6-h4f6g7k933ae'
-		$ClientSecret = '36._ERF567.6FB.XFGY75D-35TGasdrvk467'
+		$PersonalAccessToken = "c123456f-a1cd-6fv7-bh73-123r5t6y7u8i9"
+		$Organisation = 'CentralIndustrial'
+		$Project = 'TeamDevOps'
 
-		Get-AzDoAccessToken -TenantID $TenantID -ClientID $ClientId -ClientSecret $ClientSecret
+		Get-AzDoAccessToken -PersonalAccessToken $PersonalAccessToken -Organisation $Organisation -Project $Project
 		
-		This command will produce an access token.
+		This command will produce an access token which is added as a script scope variable.
 
 	.EXAMPLE
-		$TenantId = "c123456f-a1cd-6fv7-bh73-123r5t6y7u8i9"
-		$ClientId = '1a2s3d4d4-dfhg-4567-d5f6-h4f6g7k933ae'
-		$ClientSecret = '36._ERF567.6FB.XFGY75D-35TGasdrvk467'
+		$PersonalAccessToken = "c123456f-a1cd-6fv7-bh73-123r5t6y7u8i9"
+		$Organisation = 'CentralIndustrial'
+		$Project = 'TeamDevOps'
 
-		$AccessToken = Get-AzDoAccessToken -TenantID $TenantID -ClientID $ClientId -ClientSecret $ClientSecret
+		Get-AzDoAccessToken -PersonalAccessToken $PersonalAccessToken -Organisation $Organisation -Project $Project -Verbose
 		$AccessToken
 		
-		This command will produce an access token and save it to a variable. It then displays the token on screen
+		This command will produce an access token which is added as a script scope variable. It then displays the token on screen
 
-	.PARAMETER TenantID
-		This is the tenant ID of your Azure subscription.
+	.PARAMETER PersonalAccessToken
+		This is your Personal Access Token you get from Azure DevOps
 
-	.PARAMETER ClientID
-		This is the ClientID of the Service Principal. Also called Application ID.
+	.PARAMETER Organisation
+		This is the Organisation your Azure DevOps Project is in.
 
-	.PARAMETER ClientSecret
-		This is the Client Secret/Password that was generated when you secured the Service Principal
+	.PARAMETER Project
+		This is the Project/Team your resources are in.
 
 	.INPUTS
 		Input is from command line or called from a script.
 
 	.OUTPUTS
-		This will output a bearer token that can be used in future API calls.
+		This will create a bearer token that will be used in future API calls.
 
 	.NOTES
 		Author:				Lars Panzerbjørn
