@@ -44,3 +44,5 @@ Function Get-AzDOYAMLPipelineStages {
         $YamlContent = $PipelineDefinition.configuration.repository.yamlFileContent
         
         # Convert YAML to PSObject
+    }
+}
