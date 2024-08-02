@@ -1,0 +1,3 @@
+Get Groups
+Get memebers/Users
+Add user to Groups
