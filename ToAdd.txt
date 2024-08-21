@@ -1,4 +1,4 @@
 Get Groups
-Get memebers/Users
+Get memers/Users
 Add user to Groups
 
