@@ -64,6 +64,8 @@ Function Run-AzDOPipeline{
 		}
 
         $JsonBody = $runParameters | ConvertTo-Json
+		$runParameters
+		$JsonBody
 		$Run = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $JsonBody
 	}
 	END{
