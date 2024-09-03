@@ -7,7 +7,12 @@ Function Run-AzDOPipeline{
 		This will run a pipelinein your organisation.
 
 	.EXAMPLE
-		Run-AzDOPipeline -Project "Alpha Devs"
+		# Runs with default branch
+		Run-AzDOPipeline -Project "Ursus Devs"
+
+    .EXAMPLE
+		# Runs with the branch develop
+        Run-AzDOPipeline -Project "Ursus Devs" -PipelineID "1" -BranchName "develop"
 
 	.PARAMETER Project
 		The name of your Azure Devops project. Is also often a team name.
@@ -15,11 +20,8 @@ Function Run-AzDOPipeline{
 	.PARAMETER PipelineID
 		The ID of your pipeline.
 
-	.INPUTS
-		Input is from command line or called from a script.
-
-	.OUTPUTS
-		This will output a list of Pipelines.
+    .PARAMETER BranchName
+        The name of the branch to run the pipeline on. Defaults to the pipeline's default branch if not specified.
 
 	.NOTES
 		Author:				Lars Panzerbjørn
@@ -32,7 +34,10 @@ Function Run-AzDOPipeline{
 		[string]$Project,
 
 		[Parameter(Mandatory)]
-		[string]$PipelineID
+		[string]$PipelineID,
+
+        [Parameter()]
+        [string]$BranchName
 	)
 
 	BEGIN{
@@ -41,19 +46,21 @@ Function Run-AzDOPipeline{
 	}
 
 	PROCESS{
+		Write-Verbose "Processing $($MyInvocation.Mycommand)"
+
         $runParameters = @{
             resources = @{
                 repositories = @{
-                    self = @{
-                        refName = "refs/heads/master"
-                    }
+                    self = @{}
                 }
             }
         }
-        $JsonBody = $runParameters | ConvertTo-Json
 
-		Write-Verbose "Processing $($MyInvocation.Mycommand)"
-		$Run = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $JsonBody	#Runs a Pipeline
+        IF($BranchName) {
+            $runParameters.resources.repositories.self.refName = "refs/heads/$BranchName"
+        }
+
+		$Run = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $JsonBody
 	}
 	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
