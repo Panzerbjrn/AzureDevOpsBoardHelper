@@ -4,15 +4,15 @@ Function Run-AzDOPipeline{
 		This will run a pipeline.
 
 	.DESCRIPTION
-		This will run a pipelinein your organisation.
+		This will run a pipeline in your organisation.
 
 	.EXAMPLE
 		# Runs with default branch
 		Run-AzDOPipeline -Project "Ursus Devs"
 
     .EXAMPLE
-		# Runs with the branch develop
-        Run-AzDOPipeline -Project "Ursus Devs" -PipelineID "1" -BranchName "develop"
+		# Runs with the branch feature-321
+        Run-AzDOPipeline -Project "Ursus Devs" -PipelineID "1" -BranchName "feature-321"
 
 	.PARAMETER Project
 		The name of your Azure Devops project. Is also often a team name.
@@ -59,7 +59,11 @@ Function Run-AzDOPipeline{
         IF($BranchName) {
             $runParameters.resources.repositories.self.refName = "refs/heads/$BranchName"
         }
+		ELSE{
+			#$runParameters.resources.repositories.self.refName = "refs/heads/master" This line commented out for now. Will be removed at a later date.
+		}
 
+        $JsonBody = $runParameters | ConvertTo-Json
 		$Run = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $JsonBody
 	}
 	END{
@@ -67,3 +71,4 @@ Function Run-AzDOPipeline{
 		$Run
 	}
 }
+
