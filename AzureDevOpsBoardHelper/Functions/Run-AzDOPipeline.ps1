@@ -57,13 +57,15 @@ Function Run-AzDOPipeline{
         }
 
         IF($BranchName) {
-            $runParameters.resources.repositories.self.refName = "refs/heads/$BranchName"
+            #$runParameters.resources.repositories.self.refName = "refs/heads/$BranchName"
+            $runParameters.resources.repositories.self["refName"] = "refs/heads/$BranchName"
         }
 		ELSE{
 			#$runParameters.resources.repositories.self.refName = "refs/heads/master" This line commented out for now. Will be removed at a later date.
 		}
 
-        $JsonBody = $runParameters | ConvertTo-Json
+        #$JsonBody = $runParameters | ConvertTo-Json
+        $JsonBody = $runParameters | ConvertTo-Json -Depth 10
 		$runParameters
 		$JsonBody
 		$Run = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $JsonBody
