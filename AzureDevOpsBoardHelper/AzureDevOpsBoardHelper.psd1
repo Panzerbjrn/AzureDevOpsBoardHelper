@@ -30,7 +30,11 @@
     Copyright = '(c) 2019 Lars Panzerbjørn. All rights reserved.'
 
     # Description of the functionality provided by this module
+<<<<<<< HEAD
     Description = 'This module will help with certain operations in your Azure DevOps organisatioon. Especially batch creating new items, or scheduling repeated tasks, pipelines etc. Feel free to get in touch via GitHub if there is anything you would like to see added.'
+=======
+    Description = 'This module will help with certain operations on your Azure DevOps board. Especially batch creating new items, or scheduling repeated tasks, etc. Feel free to get in touch via GitHub if there is anything you would like to see added.'
+>>>>>>> ab68079c7bab2a1bdd226ed80fa2e51be67148c1
 
     # Minimum version of the PowerShell engine required by this module
     PowerShellVersion = '5.0'
@@ -124,6 +128,12 @@
 
     # HelpInfo URI of this module
     # HelpInfoURI = ''
+<<<<<<< HEAD
+=======
+
+    # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
+    # DefaultCommandPrefix = ''
+>>>>>>> ab68079c7bab2a1bdd226ed80fa2e51be67148c1
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
