@@ -29,10 +29,6 @@
 	[CmdletBinding()]
 	param(
 		[Parameter(Mandatory)]
-		[Alias('Company')]
-		[string]$Organisation,
-
-		[Parameter(Mandatory)]
 		[Alias('TeamName')]
 		[string]$Project,
 

@@ -28,7 +28,7 @@ Function Get-AzDORepo{
 	[CmdletBinding()]
 	param(
 		[Parameter(Mandatory)]
-		[string]$RepoName
+		[string]$RepoName,
 
 		[Parameter(Mandatory)]
 		[Alias('TeamName')]
