@@ -37,8 +37,7 @@
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-		$Uri = $BaseUri + "$Project/_apis/wit/repositories?api-version=7.0"
-		$Uri
+		$Uri = $BaseUri + "$Project/_apis/git/repositories?api-version=7.0"
 	}
 
 	PROCESS{
@@ -50,7 +49,7 @@
 			# Optional: Add additional settings here if needed
 		} | ConvertTo-Json
 
-		Write-Verbose "$uri"
+		Write-Verbose $uri
 		Write-Verbose $Body
 		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json" -Body $Body
 
