@@ -10,7 +10,7 @@ Function Get-AzDORepo{
 		Get-AzDORepo -Project "Alpha Devs"
 
 	.PARAMETER RepoName
-		The name of your Azure Devops Repo.
+		The name of your Azure Devops Repo. If Omitted, all repos are returned.
 
 	.PARAMETER Project
 		The name of your Azure Devops project. Is also often a team name.
@@ -37,15 +37,20 @@ Function Get-AzDORepo{
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-        $Uri = $BaseUri + "$Project/_apis/git/repositories/$RepoName`?api-version=7.0"
 	}
 
 	PROCESS{
+        IF($RepoName.ispresent){
+			$Uri = $BaseUri + "$Project/_apis/git/repositories/$RepoName`?api-version=7.0"
+		}
+		ELSE{
+			$Uri = $BaseUri + "$Project/_apis/git/repositories?api-version=7.0"
+		}
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 		$Response = Invoke-RestMethod -Uri $Uri -Method get -Headers $Header		#Retrieves list of Pipelines
 	}
 	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
-		$Response
+		$Response.value
 	}
 }
