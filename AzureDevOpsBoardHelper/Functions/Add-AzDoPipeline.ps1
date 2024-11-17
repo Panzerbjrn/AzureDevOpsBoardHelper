@@ -53,6 +53,7 @@
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 		$Uri = $BaseUri + "$Project/_apis/pipelines?api-version=7.0"
+		Write-Verbose "$Uri"
 	}
 
 	PROCESS{
@@ -62,10 +63,10 @@
 			name = $pipelineName
 			configuration = @{
 				type = "yaml"
-				path = $yamlPath
+				path = $YAMLPath
 				repository = @{
-					id = $repositoryId
-					name = $repositoryId
+					id = $RepositoryId
+					name = $RepositoryId
 					type = "azureReposGit"
 				}
 			}
@@ -73,9 +74,11 @@
 		$Body
 
 		IF($FolderPath){
-			$Body.FolderPath = $FolderPath
+			$Body.folder = $FolderPath
 		}
 
+		$Body = $Body | ConvertTo-Json -Depth 10
+		Write-Verbose $Body
 		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json" -Body $Body
 
 

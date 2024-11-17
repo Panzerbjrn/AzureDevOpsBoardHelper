@@ -12,7 +12,7 @@ Function Get-AzDoAccessToken{
 		$Project = 'TeamDevOps'
 
 		Get-AzDoAccessToken -PersonalAccessToken $PersonalAccessToken -Organisation $Organisation -Project $Project
-		
+
 		This command will produce an access token which is added as a script scope variable.
 
 	.EXAMPLE
@@ -22,7 +22,7 @@ Function Get-AzDoAccessToken{
 
 		Get-AzDoAccessToken -PersonalAccessToken $PersonalAccessToken -Organisation $Organisation -Project $Project -Verbose
 		$AccessToken
-		
+
 		This command will produce an access token which is added as a script scope variable. It then displays the token on screen
 
 	.PARAMETER PersonalAccessToken

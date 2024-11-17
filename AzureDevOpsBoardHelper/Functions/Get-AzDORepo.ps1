@@ -40,17 +40,24 @@ Function Get-AzDORepo{
 	}
 
 	PROCESS{
-        IF($RepoName.ispresent){
+        IF($RepoName){
 			$Uri = $BaseUri + "$Project/_apis/git/repositories/$RepoName`?api-version=7.0"
 		}
 		ELSE{
 			$Uri = $BaseUri + "$Project/_apis/git/repositories?api-version=7.0"
 		}
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
-		$Response = Invoke-RestMethod -Uri $Uri -Method get -Headers $Header		#Retrieves list of Pipelines
+		Write-Verbose "$Uri"
+
+		$Response = Invoke-RestMethod -Uri $Uri -Method get -Headers $Header
 	}
 	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
-		$Response.value
+		IF($RepoName){
+			$Response
+		}
+		ELSE{
+			$Response.value
+		}
 	}
 }
