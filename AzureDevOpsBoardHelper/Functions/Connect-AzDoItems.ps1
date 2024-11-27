@@ -62,7 +62,7 @@
 
 		$Body = ConvertTo-Json $Body
 		$Body
-		$Result = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $Header -ContentType $JsonContentType -Body $Body
+		$Result = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $Header -ContentType "application/json-patch+json" -Body $Body
 
 	}
 	END{
