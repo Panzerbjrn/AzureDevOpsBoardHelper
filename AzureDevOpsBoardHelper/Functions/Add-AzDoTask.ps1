@@ -7,15 +7,12 @@
 		Creates a work item of the type Task
 
 	.EXAMPLE
-		New-AzDoTask -PersonalAccessToken $PAT -Organisation $Organisation -Project $Project -TaskTitle "Test Task" -Board $Board -Description "Test Description"
-
-	.PARAMETER OrganizationName
-		The name of your Azure Devops Organisation
+		New-AzDoTask -PersonalAccessToken $PAT -Project $Project -TaskTitle "Test Task" -Board $Board -Description "Test Description"
 
 	.PARAMETER ProjectName
 		The name of your Azure Devops Project or Team
 
-	.PARAMETER Title
+	.PARAMETER TaskTitle
 		The title of the task
 
 	.PARAMETER Board
@@ -40,10 +37,6 @@
 #>
 	[CmdletBinding()]
 	param(
-		[Parameter(Mandatory)]
-		[Alias('Company')]
-		[string]$Organisation,
-
 		[Parameter(Mandatory)]
 		[Alias('TeamName')]
 		[string]$Project,
@@ -78,6 +71,13 @@
 			}
 		)
 
+		$Body += @([pscustomobject]@{
+				op = "add"
+				path = '/fields/System.Description'
+				value = $Description
+			}
+		)
+
 		IF ($Board){$BoardValue = $Board}
 		ELSE {$BoardValue = (Get-AzDoUserStoryWorkItem -WorkItemID $ParentItemID -Project $Project).Fields.'System.AreaPath'}
 		$Body += @([pscustomobject]@{
@@ -97,23 +97,13 @@
 			}
 		)
 
-		IF ($Description)
-		{
-			$Body += @([pscustomobject]@{
-					op = "add"
-					path = '/fields/System.Description'
-					value = $Description
-				}
-			)
-		}
-
 		$Body = ConvertTo-Json $Body
 		$Body
 		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json-patch+json" -Body $Body
 
-		IF (($ParentItemID) -and ($Result.id)){
-			Connect-AzDoItems -Project $Project -ParentItemID $ParentItemID -ChildItemID $Result.id -Verbose
-		}
+		# IF (($ParentItemID) -and ($Result.id)){
+		# 	Connect-AzDoItems -Project $Project -ParentItemID $ParentItemID -ChildItemID $Result.id -Verbose
+		# }
 
 	}
 	END{
