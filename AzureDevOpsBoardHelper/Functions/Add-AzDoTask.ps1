@@ -64,8 +64,7 @@
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$Task?api-version=7.0
-"
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$Task?api-version=7.0"
 	}
 
 	PROCESS{
@@ -80,7 +79,7 @@
 		)
 
 		IF ($Board){$BoardValue = $Board}
-		ELSE {$BoardValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentItemID -Project $Project).Fields.'System.AreaPath'}
+		ELSE {$BoardValue = (Get-AzDoUserStoryWorkItem -WorkItemID $ParentItemID -Project $Project).Fields.'System.AreaPath'}
 		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/System.AreaPath'
@@ -90,7 +89,7 @@
 
 
 		IF ($AssignedTo){$AssignedToValue = $AssignedTo}
-		ELSE {$AssignedToValue = (Get-AzDoUserStoryWorkItem -Organisation $Organisation -WorkItemID $ParentItemID -Project $Project).Fields.'System.Assignedto'.displayName}
+		ELSE {$AssignedToValue = (Get-AzDoUserStoryWorkItem -WorkItemID $ParentItemID -Project $Project).Fields.'System.Assignedto'.displayName}
 		$Body += @([pscustomobject]@{
 				op = "add"
 				path = '/fields/System.AssignedTo'
@@ -113,7 +112,7 @@
 		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json-patch+json" -Body $Body
 
 		IF (($ParentItemID) -and ($Result.id)){
-			Connect-AzDoItems -Organisation $Organisation -Project $Project -ParentItemID $ParentItemID -ChildItemID $Result.id -Verbose
+			Connect-AzDoItems -Project $Project -ParentItemID $ParentItemID -ChildItemID $Result.id -Verbose
 		}
 
 	}
