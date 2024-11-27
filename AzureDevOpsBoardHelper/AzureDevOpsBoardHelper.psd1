@@ -12,7 +12,7 @@
 RootModule = 'AzureDevOpsBoardHelper.psm1'
 
 # Version number of this module.
-ModuleVersion = '3.2.1'
+ModuleVersion = '3.2.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
