@@ -15,6 +15,8 @@
 	.PARAMETER ChildItemID
 		The name of your Azure Devops Project or Team
 
+    .Example
+
 	.INPUTS
 		Input is from command line or called from a script.
 
