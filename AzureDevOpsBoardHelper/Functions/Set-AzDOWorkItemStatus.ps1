@@ -36,7 +36,7 @@ Function Set-AzDOWorkItemStatus {
 
 		[Parameter(Mandatory)]
 		[Alias('WorkItem','ID')]
-		[string]$WorkItemID
+		[string]$WorkItemID,
 
 		[Parameter()][string]$Status = "Active"
 	)
