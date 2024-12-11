@@ -60,11 +60,11 @@
 #>
 	[CmdletBinding()]
 	param(
-		[Parameter(Mandatory)]
+		[Parameter()]
 		[Alias('Company')]
 		[string]$Organisation,
 
-		[Parameter(Mandatory)]
+		[Parameter()]
 		[Alias('TeamName')]
 		[string]$Project,
 

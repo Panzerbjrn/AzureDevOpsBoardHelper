@@ -41,6 +41,9 @@
 	.PARAMETER Tags
 		Tags assigned to the work item. These are separated by commas, i.e. "Tag1","Tag2"
 
+	.PARAMETER OriginalEstimate
+		How much time is the task expected to take
+
 	.INPUTS
 		Input is from command line or called from a script.
 
@@ -53,7 +56,7 @@
 #>
 	[CmdletBinding()]
 	param(
-		[Parameter(Mandatory)]
+		[Parameter()]
 		[Alias('TeamName')]
 		[string]$Project,
 
@@ -77,6 +80,8 @@
 		[Parameter()][ValidateSet(1,2,3,4)][string]$Priority = 3,
 
 		[Parameter()][string]$AssignedTo,
+
+		[Parameter()][int]$OriginalEstimate,
 
 		[Parameter()][string[]]$Tags
 	)
@@ -143,6 +148,16 @@
 					op = "add"
 					path = '/fields/Microsoft.VSTS.Common.AcceptanceCriteria'
 					value = $AcceptanceCriteria
+				}
+			)
+		}
+
+		IF ($OriginalEstimate)
+		{
+			$Body += @([pscustomobject]@{
+					op = "add"
+					path = '/fields/Microsoft.VSTS.Scheduling.OriginalEstimate'
+					value = $OriginalEstimate
 				}
 			)
 		}

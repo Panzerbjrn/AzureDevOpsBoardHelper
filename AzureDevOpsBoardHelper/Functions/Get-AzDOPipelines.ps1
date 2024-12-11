@@ -24,7 +24,7 @@ Function Get-AzDOPipelines{
 #>
 	[CmdletBinding()]
 	param(
-		[Parameter(Mandatory)]
+		[Parameter()]
 		[Alias('TeamName')]
 		[string]$Project
 	)

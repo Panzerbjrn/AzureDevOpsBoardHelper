@@ -1,13 +1,13 @@
-Function Set-AzDOWorkItemStatus {
+Function Set-AzDOWorkItem {
 <#
 	.SYNOPSIS
-		Sets the status of a work item
+		Sets various values for a work item
 
 	.DESCRIPTION
-		Sets the status of a work item
+		Sets various values for a work item
 
 	.EXAMPLE
-		Set-AzDOWorkItemStatus -Project "Alpha Devs" -WorkItemID 123456 -Status Active
+		Set-AzDOWorkItem -Project "Alpha Devs" -WorkItemID 123456 -Status Active
 
 	.PARAMETER Project
 		The name of your Azure Devops Project or Team
@@ -30,13 +30,17 @@ Function Set-AzDOWorkItemStatus {
 #>
 	[CmdletBinding()]
 	param(
-		[Parameter(Mandatory)]
-		[Alias('TeamName')]
+		[Parameter()]
+		[Alias('')]
 		[string]$Project,
 
 		[Parameter(Mandatory)]
 		[Alias('WorkItem','ID')]
 		[string]$WorkItemID,
+
+		[Parameter()][int]$OriginalEstimate,
+		[Parameter()][int]$RemainingWork,
+		[Parameter()][int]$CompletedWork,
 
 		[Parameter()][string]$Status = "Active"
 	)

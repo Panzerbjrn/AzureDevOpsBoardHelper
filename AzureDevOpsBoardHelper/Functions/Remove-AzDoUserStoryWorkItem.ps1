@@ -38,7 +38,7 @@
 #>
 	[CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
 	param(
-		[Parameter(Mandatory)]
+		[Parameter()]
 		[Alias('TeamName')]
 		[string]$Project,
 

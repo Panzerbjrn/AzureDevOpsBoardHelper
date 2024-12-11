@@ -30,7 +30,7 @@ Function Get-AzDORepo{
 		[Parameter()]
 		[string]$RepoName,
 
-		[Parameter(Mandatory)]
+		[Parameter()]
 		[Alias('TeamName')]
 		[string]$Project
 	)

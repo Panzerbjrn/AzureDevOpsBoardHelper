@@ -37,7 +37,7 @@
 		[Parameter(Mandatory)]
 		[string]$PipelineName,
 
-		[Parameter(Mandatory)]
+		[Parameter()]
 		[Alias('TeamName')]
 		[string]$Project,
 

@@ -24,7 +24,7 @@ Function Get-AzDOYAMLPipelineStages {
 #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]$Project,
 
         [Parameter(Mandatory)]
@@ -39,10 +39,10 @@ Function Get-AzDOYAMLPipelineStages {
     PROCESS {
         Write-Verbose "Processing $($MyInvocation.Mycommand)"
         $PipelineDefinition = Invoke-RestMethod -Uri $Uri -Method GET -Headers $Header -ContentType $JsonContentType
-        
+
         # Extract the YAML content from the pipeline definition
         $YamlContent = $PipelineDefinition.configuration.repository.yamlFileContent
-        
+
         # Convert YAML to PSObject
     }
 }

@@ -24,7 +24,7 @@ Function Get-AzDOPipelineStages {
 #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]$Project,
 
         [Parameter(Mandatory)]
@@ -39,7 +39,7 @@ Function Get-AzDOPipelineStages {
     PROCESS {
         Write-Verbose "Processing $($MyInvocation.Mycommand)"
         $PipelineDefinition = Invoke-RestMethod -Uri $Uri -Method GET -Headers $Header -ContentType $JsonContentType
-        
+
         # Extract stages from the pipeline definition
         $stages = $PipelineDefinition.stages | Select-Object -ExpandProperty name
     }

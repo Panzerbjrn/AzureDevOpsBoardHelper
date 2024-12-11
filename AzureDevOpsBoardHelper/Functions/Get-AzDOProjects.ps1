@@ -28,7 +28,7 @@
 #>
 	[CmdletBinding()]
 	param(
-		[Parameter(Mandatory)]
+		[Parameter()]
 		[Alias('Company')]
 		[string]$Organisation
 	)
