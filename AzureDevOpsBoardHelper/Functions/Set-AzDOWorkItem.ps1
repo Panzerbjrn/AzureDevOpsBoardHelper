@@ -47,7 +47,7 @@ Function Set-AzDOWorkItem {
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$workItemId`?api-version=7.0"
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$workItemId`?api-version=7.0"
 	}
 
 	PROCESS{
@@ -57,7 +57,7 @@ Function Set-AzDOWorkItem {
             @{
                 op = "replace"
                 path = "/fields/System.State"
-                value = "$Status"
+                value = $Status
             }
         )
         $Body = ConvertTo-Json -InputObject $Body
