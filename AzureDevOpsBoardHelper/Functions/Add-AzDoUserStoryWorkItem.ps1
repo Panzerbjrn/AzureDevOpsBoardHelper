@@ -88,7 +88,7 @@
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$$($StoryType)?api-version=7.0"
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$($StoryType)?api-version=7.0"
 	}
 
 	PROCESS{
