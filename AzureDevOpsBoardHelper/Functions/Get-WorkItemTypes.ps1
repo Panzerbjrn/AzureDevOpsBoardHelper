@@ -38,7 +38,13 @@ Function Get-WorkItemTypes{
 	}
 	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
-		$Result
+		($Result.value | ForEach-Object {
+    		[PSCustomObject]@{
+			Name        = $_.name
+			#Description = $_.description
+			#Reference   = $_.referenceName
+			}
+		}).name
 	}
 }
 
