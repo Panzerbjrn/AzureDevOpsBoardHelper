@@ -29,6 +29,7 @@ Function Get-WorkItemTypes{
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 		$Uri = $BaseUri + "$Project/_apis/wit/workitemtypes?api-version=7.0"
+		Write-Verbose $Uri
 	}
 
 	PROCESS{
