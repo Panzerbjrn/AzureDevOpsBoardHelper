@@ -23,11 +23,13 @@ Function Get-WorkItemTypes{
 	param(
 		[Parameter()]
 		[Alias('TeamName')]
-		[string]$Project
+		[string]$Projectt
 	)
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
+		Write-Verbose "BaseUri is $BaseUri"
+		Write-Verbose "Project is $Project"
 		$Uri = $BaseUri + "$Project/_apis/wit/workitemtypes?api-version=7.0"
 		Write-Verbose $Uri
 	}
