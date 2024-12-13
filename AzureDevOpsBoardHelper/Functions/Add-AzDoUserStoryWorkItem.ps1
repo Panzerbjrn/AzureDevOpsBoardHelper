@@ -50,6 +50,9 @@
 	.OUTPUTS
 		This will output the logfile.
 
+	.LINK
+		https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/work-items/create
+
 	.NOTES
 		Author:				Lars Panzerbjørn
 		Creation Date:		2020.07.31
@@ -88,7 +91,9 @@
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$($StoryType)?api-version=7.0"
+		#$Uri = $BaseUri + "$Project/_apis/wit/workitems/$($StoryType)?api-version=7.0"
+		#$Uri = $BaseUri + "$Projec/_apis/wit/workitems/User%20Story?api-version=7.1"
+		$Uri = $BaseUri + "$Projec/_apis/wit/workitems/Bug?api-version=7.1"
 	}
 
 	PROCESS{
