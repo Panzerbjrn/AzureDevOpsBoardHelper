@@ -32,7 +32,7 @@ Function Get-AzDORepo{
 
 		[Parameter()]
 		[Alias('TeamName')]
-		[string]$Project
+		[string]$Project = $Script:Project
 	)
 
 	BEGIN{

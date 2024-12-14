@@ -22,7 +22,7 @@ function Get-AzDOPipelineStageStatus {
 		Creation Date:		2020.07.31
 #>
     param (
-        [string]$project,
+        [string]$Project = $Script:Project,
         [string]$PipiLineID,
         [string]$RunID
     )

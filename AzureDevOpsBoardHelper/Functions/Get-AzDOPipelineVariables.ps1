@@ -29,7 +29,7 @@ Function Get-AzDOPipelineVariables{
 	param(
 		[Parameter()]
 		[Alias('TeamName')]
-		[string]$Project,
+		[string]$Project = $Script:Project,
 
 		[Parameter(Mandatory)]
 		[string]$PipelineID

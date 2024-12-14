@@ -1,4 +1,4 @@
-Function Get-WorkItemTypes{
+Function Get-AzDOWorkItemTypes{
 <#
 	.SYNOPSIS
 		This will get the work item types available in your Azure DevOps project.
@@ -23,7 +23,7 @@ Function Get-WorkItemTypes{
 	param(
 		[Parameter()]
 		[Alias('TeamName')]
-		[string]$Projectt
+		[string]$Project = $Script:Project
 	)
 
 	BEGIN{

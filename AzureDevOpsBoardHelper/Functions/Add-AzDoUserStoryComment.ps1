@@ -62,11 +62,11 @@
 	param(
 		[Parameter()]
 		[Alias('Company')]
-		[string]$Organisation,
+		[string]$Organisation = $Script:Organisation,
 
 		[Parameter()]
 		[Alias('TeamName')]
-		[string]$Project,
+		[string]$Project = $Script:Project,
 
 		[Parameter(Mandatory)]
 		[Alias('WorkItem','ID')]

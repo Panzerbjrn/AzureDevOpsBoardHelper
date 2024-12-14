@@ -25,7 +25,7 @@ Function Get-AzDOYAMLPipelineStages {
     [CmdletBinding()]
     param(
         [Parameter()]
-        [string]$Project,
+        [string]$Project = $Script:Project,
 
         [Parameter(Mandatory)]
         [string]$PipelineID

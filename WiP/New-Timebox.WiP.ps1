@@ -8,17 +8,17 @@ Function New-AzDoTimeBox{
 
 			[Parameter(Mandatory)]
 			[Alias('Company')]
-			[string]$Organisation,
+			[string]$Organisation = $Script:Organisation,
 
 			[Parameter(Mandatory)]
 			[Alias('TeamName')]
-			[string]$Project,
-			
+			[string]$Project = $Script:Project,
+
 			[Parameter()][string]$Board,
 
 			[Parameter()][string]$WorkItemToCopy,
 
-			[Parameter()][string[]]$Users			
+			[Parameter()][string[]]$Users
 	)
 
 	$AZDOSplat = @{
@@ -29,7 +29,7 @@ Function New-AzDoTimeBox{
 	}
 
 	$WItem = Get-AzDoUserStoryWorkItem @AZDOSplat -WorkItemID $WorkItemToCopy
-	
+
 	$Description = "
 		Acceptance criteria: SEE TASK ITEMS
 		Requestor: ITBIT Team
@@ -37,7 +37,7 @@ Function New-AzDoTimeBox{
 		Delivery of Request (dashboard, data feed, etc.): Weekly ADMIN tasks that need attention to ensure maintenance of our estate.
 	"
 
-	
+
 	$NewAzDoUserStoryWorkItemSplat = @{
 		Title = "Admin Support Timebox - $($WItem.fields.'System.IterationPath'.Split('\')[-1].split('(')[0])"
 		Description = $WItem.fields.'System.description'

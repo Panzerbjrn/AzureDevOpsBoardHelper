@@ -26,7 +26,7 @@ Function Get-AzDOPipelines{
 	param(
 		[Parameter()]
 		[Alias('TeamName')]
-		[string]$Project
+		[string]$Project = $Script:Project
 	)
 
 	BEGIN{

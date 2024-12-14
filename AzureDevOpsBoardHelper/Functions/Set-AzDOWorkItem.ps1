@@ -32,7 +32,7 @@ Function Set-AzDOWorkItem {
 	param(
 		[Parameter()]
 		[Alias('')]
-		[string]$Project,
+		[string]$Project = $Script:Project,
 
 		[Parameter(Mandatory)]
 		[Alias('WorkItem','ID')]
@@ -41,7 +41,6 @@ Function Set-AzDOWorkItem {
 		[Parameter()][int]$OriginalEstimate,
 		[Parameter()][int]$RemainingWork,
 		[Parameter()][int]$CompletedWork,
-
 		[Parameter()][string]$Status = "Active"
 	)
 

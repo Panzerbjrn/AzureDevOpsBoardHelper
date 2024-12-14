@@ -22,7 +22,7 @@ Function Get-AzDOPipelineStatus {
 		Creation Date:		2020.07.31
 #>
     param (
-        [string]$Project,
+        [string]$Project = $Script:Project,
         [string]$pipelineId,
         [string]$RunID
     )

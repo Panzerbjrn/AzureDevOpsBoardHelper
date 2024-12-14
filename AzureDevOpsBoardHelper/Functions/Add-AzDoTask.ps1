@@ -39,7 +39,7 @@
 	param(
 		[Parameter()]
 		[Alias('TeamName')]
-		[string]$Project,
+		[string]$Project = $Script:Project,
 
 		[Parameter(Mandatory)]
 		[Alias('Title')]

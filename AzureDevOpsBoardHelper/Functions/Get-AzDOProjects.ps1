@@ -30,7 +30,7 @@
 	param(
 		[Parameter()]
 		[Alias('Company')]
-		[string]$Organisation
+		[string]$Organisation = $Script:Organisation
 	)
 
 	BEGIN{
