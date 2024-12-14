@@ -53,7 +53,7 @@ Function Get-AzDoAccessToken{
 
 		[Parameter(Mandatory)]
 		[Alias('Company')]
-		[string]$Organisation
+		[string]$Organisation,
 
 		[Parameter()]
 		[Alias('TeamName')]
