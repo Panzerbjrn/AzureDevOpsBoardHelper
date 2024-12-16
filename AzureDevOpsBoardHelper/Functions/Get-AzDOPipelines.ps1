@@ -36,7 +36,7 @@ Function Get-AzDOPipelines{
 
 	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
-		$Pipelines = Invoke-RestMethod -Uri $Uri -Method get -Headers $Header		#Retrieves list of Pipelines
+		$Pipelines = Invoke-RestMethod -Uri $Uri -Method get -Headers $Header	#Retrieves list of Pipelines
 	}
 	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"

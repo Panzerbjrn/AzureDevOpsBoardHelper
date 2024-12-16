@@ -8,6 +8,9 @@
 		This will get a work item and output it to the console.
 
 	.EXAMPLE
+		Get-AzDoUserStoryWorkItem -WorkItemID 123456
+
+	.EXAMPLE
 		Get-AzDoUserStoryWorkItem -Project "Alpha Devs" -WorkItemID 123456
 
 	.EXAMPLE
@@ -17,7 +20,7 @@
 		The name of your Azure Devops project. Is also often a team name.
 
 	.PARAMETER WorkItemID
-		The ID number of the work item you wish to delete
+		The ID number of the work item you wish to get
 
 	.INPUTS
 		Input is from command line or called from a script.
