@@ -1,13 +1,13 @@
 ﻿Function Add-AzDoPipeline{
 <#
 	.SYNOPSIS
-		Creates a work item of the type Task
+		Creates an Azure DevOps pipeline.
 
 	.DESCRIPTION
-		Creates a work item of the type Task
+		Creates an Azure DevOps pipeline by using its pipeline ID or name.
 
 	.EXAMPLE
-		New-AzDoPipeline -PersonalAccessToken $PAT -PipelineName "Test_Pipe" -Project "CI Team" -RepositoryName CoolRepo
+		New-AzDoPipeline -PipelineName "Test_Pipe" -Project "CI Team" -RepositoryName CoolRepo
 
 	.PARAMETER PipelineName
 		The name of pipeline you wish to create

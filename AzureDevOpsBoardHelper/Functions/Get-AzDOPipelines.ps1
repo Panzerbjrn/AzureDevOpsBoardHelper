@@ -7,6 +7,9 @@ Function Get-AzDOPipelines{
 		This will get a list of Pipelines in your organisation.
 
 	.EXAMPLE
+		Get-AzDOPipelines
+
+	.EXAMPLE
 		Get-AzDOPipelines -Project "Alpha Devs"
 
 	.PARAMETER Project
@@ -26,12 +29,21 @@ Function Get-AzDOPipelines{
 	param(
 		[Parameter()]
 		[Alias('TeamName')]
-		[string]$Project = $Script:Project
+		[string]$Project = $Script:Project,
+
+		[Parameter(Mandatory)]
+        [string]$PipelineID
+
 	)
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-        $Uri = $BaseUri + "$Project/_apis/pipelines?api-version=7.0"
+		IF($PipelineID){
+			$Uri = $BaseUri + "$Project/_apis/pipelines/$PipelineId`?api-version=7.0"
+		}
+		ELSE{
+			$Uri = $BaseUri + "$Project/_apis/pipelines?api-version=7.0"
+		}
 	}
 
 	PROCESS{
