@@ -15,6 +15,9 @@ Function Get-AzDOPipelines{
 	.PARAMETER Project
 		The name of your Azure Devops project. Is also often a team name.
 
+	.PARAMETER PipelineID
+		This is the ID of your pipeline
+
 	.INPUTS
 		Input is from command line or called from a script.
 
