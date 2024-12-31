@@ -34,7 +34,7 @@ Function Get-AzDOPipelines{
 		[Alias('TeamName')]
 		[string]$Project = $Script:Project,
 
-		[Parameter(Mandatory)]
+		[Parameter()]
         [string]$PipelineID
 
 	)
