@@ -28,6 +28,7 @@ Function Get-AzDORepo{
 	[CmdletBinding()]
 	param(
 		[Parameter()]
+		[Alias('RepositoryName')]
 		[string]$RepoName,
 
 		[Parameter()]
