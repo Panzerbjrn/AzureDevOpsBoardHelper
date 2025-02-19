@@ -64,7 +64,6 @@ Function Set-AzDOWorkItem {
 		Write-Verbose -Message $Body
 		Write-Verbose -Message $Uri
 		$Result = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $Header -ContentType "application/json-patch+json" -Body $Body
-                  #Invoke-RestMethod -Uri $uri -Method Patch -Headers $headers -Body $body -OutVariable Response
 	}
 	END{
 		Write-Verbose -Message "Ending $($MyInvocation.Mycommand)"
