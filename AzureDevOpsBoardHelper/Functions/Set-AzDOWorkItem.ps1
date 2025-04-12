@@ -41,7 +41,8 @@ Function Set-AzDOWorkItem {
 		[Parameter()][int]$RemainingWork,
 		[Parameter()][int]$CompletedWork,
 		[Parameter()][string]$Status = "Active",
-		[Parameter()][string]$WorkItemTitle
+		[Parameter()][string]$WorkItemTitle,
+		[Parameter()][string]$CalculateRemainingWork
 	)
 
 	BEGIN{
@@ -52,6 +53,15 @@ Function Set-AzDOWorkItem {
 	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 
+		IF(!(Get-AzDoUserStoryWorkItem -WorkItemID $workItemId)) {
+			Write-Error -Message "Work item with ID $workItemId not found." -erroraction Stop
+			RETURN
+		}
+
+		IF($CalculateRemainingWork) {
+			$OriginalEstimate = (Get-AzDoUserStoryWorkItem -WorkItemID 5).fields.'Microsoft.VSTS.Scheduling.OriginalEstimate'
+			$RemainingWork = $OriginalEstimate - $CompletedWork
+		}
 
         $Body = @([pscustomobject]@{
                 op = "replace"
@@ -91,20 +101,6 @@ Function Set-AzDOWorkItem {
 				}
 			)
 		}
-
-		$Body += @([pscustomobject]@{
-				op = "add"
-				path = '/fields/System.Title'
-				value = $WorkItemTitle
-			}
-		)
-		$Body += @([pscustomobject]@{
-				op = "add"
-				path = '/fields/System.AreaPath'
-				value = $Board
-			}
-		)
-
 
         $Body = ConvertTo-Json -InputObject $Body
 
