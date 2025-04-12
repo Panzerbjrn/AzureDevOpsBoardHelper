@@ -31,7 +31,6 @@ Function Set-AzDOWorkItem {
 	[CmdletBinding()]
 	param(
 		[Parameter()]
-		[Alias('')]
 		[string]$Project = $Script:Project,
 
 		[Parameter(Mandatory)]
@@ -41,7 +40,8 @@ Function Set-AzDOWorkItem {
 		[Parameter()][int]$OriginalEstimate,
 		[Parameter()][int]$RemainingWork,
 		[Parameter()][int]$CompletedWork,
-		[Parameter()][string]$Status = "Active"
+		[Parameter()][string]$Status = "Active",
+		[Parameter()][string]$WorkItemTitle
 	)
 
 	BEGIN{
@@ -52,13 +52,60 @@ Function Set-AzDOWorkItem {
 	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 
-        $Body = @(
-            @{
+
+        $Body = @([pscustomobject]@{
                 op = "replace"
                 path = "/fields/System.State"
                 value = $Status
             }
         )
+		IF($OriginalEstimate) {
+			$Body += @([pscustomobject]@{
+					op = "add"
+					path = '/fields/Microsoft.VSTS.Scheduling.OriginalEstimate'
+					value = $OriginalEstimate
+				}
+			)
+		}
+		IF($RemainingWork) {
+			$Body += @([pscustomobject]@{
+					op = "add"
+					path = '/fields/Microsoft.VSTS.Scheduling.RemainingWork'
+					value = $RemainingWork
+				}
+			)
+		}
+		IF($CompletedWork) {
+			$Body += @([pscustomobject]@{
+					op = "add"
+					path = '/fields/Microsoft.VSTS.Scheduling.CompletedWork'
+					value = $CompletedWork
+				}
+			)
+		}
+		IF($WorkItemTitle) {
+			$Body += @([pscustomobject]@{
+					op = "add"
+					path = '/fields/System.Title'
+					value = $WorkItemTitle
+				}
+			)
+		}
+
+		$Body += @([pscustomobject]@{
+				op = "add"
+				path = '/fields/System.Title'
+				value = $WorkItemTitle
+			}
+		)
+		$Body += @([pscustomobject]@{
+				op = "add"
+				path = '/fields/System.AreaPath'
+				value = $Board
+			}
+		)
+
+
         $Body = ConvertTo-Json -InputObject $Body
 
 		Write-Verbose -Message $Body
