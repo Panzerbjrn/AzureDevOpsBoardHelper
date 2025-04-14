@@ -18,3 +18,6 @@ ForEach ($Import in @($Functions + $Helpers)){
 }
 
 Export-ModuleMember -Function $Functions.Basename
+
+Set-Alias -Name Run-AzDOPipeline -Value Start-AzDOPipeline
+Export-ModuleMember -Function Start-AzDOPipeline -Alias Run-AzDOPipeline

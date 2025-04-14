@@ -1,4 +1,4 @@
-Function Run-AzDOPipeline{
+Function Start-AzDOPipeline{
 <#
 	.SYNOPSIS
 		This will run a pipeline.
@@ -8,11 +8,11 @@ Function Run-AzDOPipeline{
 
 	.EXAMPLE
 		# Runs with default branch
-		Run-AzDOPipeline -Project "Ursus Devs"
+		Start-AzDOPipeline -Project "Ursus Devs"
 
     .EXAMPLE
 		# Runs with the branch feature-321
-        Run-AzDOPipeline -Project "Ursus Devs" -PipelineID "1" -BranchName "feature-321"
+        Start-AzDOPipeline -Project "Ursus Devs" -PipelineID "1" -BranchName "feature-321"
 
 	.PARAMETER Project
 		The name of your Azure Devops project. Is also often a team name.
