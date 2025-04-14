@@ -40,10 +40,10 @@ Function Set-AzDOWorkItem {
 		[Parameter()][int]$OriginalEstimate,
 		[Parameter()][int]$RemainingWork,
 		[Parameter()][int]$CompletedWork,
-		[Parameter()][int]$AddToCompletedWork,
 		[Parameter()][string]$Status = "Active",
 		[Parameter()][string]$WorkItemTitle,
-		[Parameter()][switch]$CalculateRemainingWork
+		[Parameter()][switch]$CalculateRemainingWork,
+		[Parameter()][switch]$AddToCompletedWork
 	)
 
 	BEGIN{
@@ -60,7 +60,7 @@ Function Set-AzDOWorkItem {
 		}
 
 		IF($AddToCompletedWork) {
-			$CompletedWork = (Get-AzDoUserStoryWorkItem -WorkItemID $WorkItemID).fields.'Microsoft.VSTS.Scheduling.CompletedWork' + $AddToCompletedWork
+			$CompletedWork = (Get-AzDoUserStoryWorkItem -WorkItemID $WorkItemID).fields.'Microsoft.VSTS.Scheduling.CompletedWork' + $CompletedWork
 		}
 
 		IF($CalculateRemainingWork) {
