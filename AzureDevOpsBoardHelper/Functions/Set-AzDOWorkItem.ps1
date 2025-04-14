@@ -9,6 +9,16 @@ Function Set-AzDOWorkItem {
 	.EXAMPLE
 		Set-AzDOWorkItem -Project "Alpha Devs" -WorkItemID 123456 -Status Active
 
+	.EXAMPLE
+		This example edits an item on the same board.
+
+		Set-AzDOWorkItem -Project $TeamName -WorkItemID 123456 -Status Active -OriginalEstimate 10 -RemainingWork 5 -CompletedWork 3
+
+	.EXAMPLE
+		This example edits an item on the same board.
+
+		Set-AzDOWorkItem -Project $TeamName -WorkItemID 123456 -Status Active -OriginalEstimate 10 -RemainingWork 5 -CompletedWork 3 -AddToCompletedWork
+
 	.PARAMETER Project
 		The name of your Azure Devops Project or Team
 
@@ -17,6 +27,24 @@ Function Set-AzDOWorkItem {
 
 	.PARAMETER Status
 		The desired status to set the work item to.
+
+	.PARAMETER OriginalEstimate
+		How much time is the task expected to take
+
+	.PARAMETER RemainingWork
+		How much time is left on the task
+
+	.PARAMETER CompletedWork
+		How much time has been spent on the task
+
+	.PARAMETER WorkItemTitle
+		The title of the work item
+
+	.PARAMETER CalculateRemainingWork
+		Calculates the remaining work based on the original estimate and completed work.
+
+	.PARAMETER AddToCompletedWork
+		Adds the completed work to the existing completed work.
 
 	.INPUTS
 		Input is from command line or called from a script.
