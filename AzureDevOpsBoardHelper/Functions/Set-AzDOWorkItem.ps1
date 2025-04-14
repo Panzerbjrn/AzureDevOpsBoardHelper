@@ -42,7 +42,7 @@ Function Set-AzDOWorkItem {
 		[Parameter()][int]$CompletedWork,
 		[Parameter()][string]$Status = "Active",
 		[Parameter()][string]$WorkItemTitle,
-		[Parameter()][string]$CalculateRemainingWork
+		[Parameter()][switch]$CalculateRemainingWork
 	)
 
 	BEGIN{
