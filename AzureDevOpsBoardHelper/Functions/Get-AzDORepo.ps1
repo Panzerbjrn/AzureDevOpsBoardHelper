@@ -7,9 +7,23 @@ Function Get-AzDORepo{
 		This will get This will get various details for a Repo in your Organisation.
 
 	.EXAMPLE
+		This example will return details for all repos in the current project.
+		If you have set the $Project variable, you can omit the Project parameter.
+		Get-AzDORepo
+
+	.EXAMPLE
+		This example will return details for all repos in the project "Alpha Devs".
 		Get-AzDORepo -Project "Alpha Devs"
 
-	.PARAMETER RepoName
+	.EXAMPLE
+		This example will return details for the repo named "CoolRepo" in the project "Alpha Devs".
+		Get-AzDORepo -Project "Alpha Devs -RepositoryName "CoolRepo"
+
+	.EXAMPLE
+		This example will return details for the repo named "CoolRepo" in the current project.
+		Get-AzDORepo -RepositoryName "CoolRepo"
+
+	.PARAMETER RepositoryName
 		The name of your Azure Devops Repo. If Omitted, all repos are returned.
 
 	.PARAMETER Project
