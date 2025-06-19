@@ -28,8 +28,8 @@ Function Get-AzDORepo{
 	[CmdletBinding()]
 	param(
 		[Parameter()]
-		[Alias('RepositoryName')]
-		[string]$RepoName,
+		[Alias('RepoName')]
+		[string]$RepositoryName,
 
 		[Parameter()]
 		[Alias('TeamName')]

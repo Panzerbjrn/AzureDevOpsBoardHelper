@@ -16,7 +16,10 @@
 		The name of your Azure Devops Project or Team
 
 	.PARAMETER RepositoryId
-		The ID of your Repository
+		The ID of your repository that hosts the pipelines. Either this or RepositoryName must be specified.
+
+	.PARAMETER RepositoryName
+		The name of the repository that hosts the pipelines. Either this or RepositoryId must be specified.
 
 	.PARAMETER FolderPath
 		If you use folders to organise your Pipelines, this can be added here.
@@ -41,8 +44,11 @@
 		[Alias('TeamName')]
 		[string]$Project = $Script:Project,
 
-		[Parameter(Mandatory)]
+		[Parameter()]
 		[string]$RepositoryId,
+
+		[Parameter()]
+		[string]$RepositoryName,
 
 		[Parameter()][string]$FolderPath,
 
@@ -54,10 +60,22 @@
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
 		$Uri = $BaseUri + "$Project/_apis/pipelines?api-version=7.0"
 		Write-Verbose "$Uri"
+		#Testing Repo Name or ID exists
+		if (-not $RepositoryId -and -not $RepositoryName) {
+			Write-Error "You must specify either a RepositoryId or a RepositoryName."
+			return
+		}
 	}
 
 	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
+
+		#Converting repo name to repo ID
+		if (($RepositoryName) -and (-not $RepositoryId)) {
+			# Get the repository ID by name
+			$RepositoryId = (Get-AzDORepo -Project $Project -RepoName $RepositoryName).id
+			Write-Verbose "Found Repository ID: $RepositoryId"
+		}
 
 		$Body = @{
 			name = $pipelineName
