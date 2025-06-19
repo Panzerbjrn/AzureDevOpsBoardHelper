@@ -55,8 +55,8 @@ Function Get-AzDORepo{
 	}
 
 	PROCESS{
-        IF($RepoName){
-			$Uri = $BaseUri + "$Project/_apis/git/repositories/$RepoName`?api-version=7.0"
+        IF($RepositoryName){
+			$Uri = $BaseUri + "$Project/_apis/git/repositories/$RepositoryName`?api-version=7.0"
 		}
 		ELSE{
 			$Uri = $BaseUri + "$Project/_apis/git/repositories?api-version=7.0"
@@ -68,7 +68,7 @@ Function Get-AzDORepo{
 	}
 	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
-		IF($RepoName){
+		IF($RepositoryName){
 			$Response
 		}
 		ELSE{
