@@ -28,12 +28,12 @@ Function Get-AzDOYAMLPipelineStages {
         [string]$Project = $Script:Project,
 
         [Parameter(Mandatory)]
-        [string]$PipelineID
+        [string]$PipelineId
     )
 
     BEGIN {
         Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-        $Uri = $BaseUri + "$Project/_apis/pipelines/$PipelineID/definitions?api-version=7.0"
+        $Uri = $BaseUri + "$Project/_apis/pipelines/$PipelineId/definitions?api-version=7.0"
     }
 
     PROCESS {

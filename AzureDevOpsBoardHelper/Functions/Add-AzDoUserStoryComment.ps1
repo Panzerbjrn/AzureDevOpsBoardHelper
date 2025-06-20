@@ -94,7 +94,7 @@
 		})
 		$Body = ConvertTo-Json $Body
 		$Body
-		$Result = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $Header -ContentType $JsonContentType -Body $Body
+		$Result = Invoke-RestMethod -Uri $Uri -Method PATCH -Headers $Header -ContentType $JsonContentType -Body $Body
 	}
 	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"

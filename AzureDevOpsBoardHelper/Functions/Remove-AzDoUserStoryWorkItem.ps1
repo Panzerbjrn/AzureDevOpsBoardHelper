@@ -55,7 +55,7 @@
 	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 		IF($PSCmdlet.ShouldProcess()){
-			$WItem = Invoke-RestMethod -Uri $uri -Method DELETE -Headers $Header	#This deletes the Work item
+			$WItem = Invoke-RestMethod -Uri $Uri -Method DELETE -Headers $Header	#This deletes the Work item
 		}
 	}
 	END{

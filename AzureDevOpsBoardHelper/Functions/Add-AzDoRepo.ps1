@@ -49,16 +49,16 @@
 			# Optional: Add additional settings here if needed
 		} | ConvertTo-Json
 
-		Write-Verbose $uri
+		Write-Verbose $Uri
 		Write-Verbose $Body
-		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json" -Body $Body
+		$Result = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType "application/json" -Body $Body
 
 
 	}
 	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
-		if ($Result.name -eq $repositoryName) {
-			#Write-Output "Repository '$($Result.name)' created successfully in project '$project'."
+		if ($Result.name -eq $RepositoryName) {
+			#Write-Output "Repository '$($Result.name)' created successfully in project '$Project'."
 			$Result
 		} else {
 			Write-Output "Failed to create repository. Response:"

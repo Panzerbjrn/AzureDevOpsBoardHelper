@@ -65,14 +65,13 @@ Function Get-AzDORepo{
 		Write-Verbose "$Uri"
 
 		$Response = Invoke-RestMethod -Uri $Uri -Method get -Headers $Header
+
+		#MarkdownBadge: Currently WIP
+		#$MDBadge = "[![Build Status]($($BaseUri)$Project/_apis/build/status/$($RepositoryName)`?branchName=$Branch)]($($BaseUri)$Project/_apis/build/latest?definitionId={definitionId}&branchName=$Branch)"
 	}
 	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
-		IF($RepositoryName){
 			$Response
-		}
-		ELSE{
-			$Response.value
-		}
+			#$Person | Add-Member -MemberType NoteProperty -Name "Country" -Value "Spain"
 	}
 }

@@ -179,8 +179,8 @@
 		}
 		$Body = ConvertTo-Json $Body
 		Write-Verbose -Message $Body
-		Write-Verbose -Message "$uri"
-		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $Body
+		Write-Verbose -Message "$Uri"
+		$Result = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $Body
 	}
 	END{
 		Write-Verbose -Message "Ending $($MyInvocation.Mycommand)"

@@ -35,14 +35,17 @@ Function Get-AzDOPipelines{
 		[string]$Project = $Script:Project,
 
 		[Parameter()]
-        [string]$PipelineID
+        [string]$PipelineId
 
 	)
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-		IF($PipelineID){
+		IF($PipelineId){
 			$Uri = $BaseUri + "$Project/_apis/pipelines/$PipelineId`?api-version=7.0"
+
+			#MarkdownBadge:
+			#$MDUri = $BaseUri + "$Project/_apis/build/status/$PipelineId`?branchName=main&repoName=chuck-dev-uc1-01&api-version=6.0-preview.2"
 		}
 		ELSE{
 			$Uri = $BaseUri + "$Project/_apis/pipelines?api-version=7.0"
@@ -52,9 +55,15 @@ Function Get-AzDOPipelines{
 	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 		$Pipelines = Invoke-RestMethod -Uri $Uri -Method get -Headers $Header	#Retrieves list of Pipelines
+
+
 	}
 	END{
 		Write-Verbose "Ending $($MyInvocation.Mycommand)"
-		$Pipelines.Value
+		IF($PipelineId){
+			$Pipelines
+		}
+		ELSE{
+			$Pipelines.Value
 	}
 }

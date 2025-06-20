@@ -34,7 +34,7 @@ Function Start-AzDOPipeline{
 		[string]$Project = $Script:Project,
 
 		[Parameter(Mandatory)]
-		[string]$PipelineID,
+		[string]$PipelineId,
 
         [Parameter()]
         [string]$BranchName
@@ -42,13 +42,13 @@ Function Start-AzDOPipeline{
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-        $Uri = $BaseUri + "$Project/_apis/pipelines/$PipelineID/runs?api-version=7.0"
+        $Uri = $BaseUri + "$Project/_apis/pipelines/$PipelineId/runs?api-version=7.0"
 	}
 
 	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 
-        $runParameters = @{
+        $RunParameters = @{
             resources = @{
                 repositories = @{
                     self = @{}
@@ -57,16 +57,16 @@ Function Start-AzDOPipeline{
         }
 
         IF($BranchName) {
-            #$runParameters.resources.repositories.self.refName = "refs/heads/$BranchName"
-            $runParameters.resources.repositories.self["refName"] = "refs/heads/$BranchName"
+            #$RunParameters.resources.repositories.self.refName = "refs/heads/$BranchName"
+            $RunParameters.resources.repositories.self["refName"] = "refs/heads/$BranchName"
         }
 		ELSE{
-			#$runParameters.resources.repositories.self.refName = "refs/heads/master" This line commented out for now. Will be removed at a later date.
+			#$RunParameters.resources.repositories.self.refName = "refs/heads/master" This line commented out for now. Will be removed at a later date.
 		}
 
-        #$JsonBody = $runParameters | ConvertTo-Json
-        $JsonBody = $runParameters | ConvertTo-Json -Depth 10
-		$runParameters
+        #$JsonBody = $RunParameters | ConvertTo-Json
+        $JsonBody = $RunParameters | ConvertTo-Json -Depth 10
+		$RunParameters
 		$JsonBody
 		$Run = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $JsonBody
 	}

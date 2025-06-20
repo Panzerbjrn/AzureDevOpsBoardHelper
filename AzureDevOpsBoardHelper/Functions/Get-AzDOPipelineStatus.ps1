@@ -23,11 +23,11 @@ Function Get-AzDOPipelineStatus {
 #>
     param (
         [string]$Project = $Script:Project,
-        [string]$pipelineId,
+        [string]$PipelineId,
         [string]$RunID
     )
 
-    $Uri = $BaseUri + "$Project/_apis/pipelines/$pipelineId/runs/$RunID`?api-version=7.0"
+    $Uri = $BaseUri + "$Project/_apis/pipelines/$PipelineId/runs/$RunID`?api-version=7.0"
     $Response = Invoke-RestMethod -Uri $Uri -Method Get -Headers $Header
     return $Response
 }

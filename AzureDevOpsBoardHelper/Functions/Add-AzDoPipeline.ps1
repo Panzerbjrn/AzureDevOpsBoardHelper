@@ -78,7 +78,7 @@
 		}
 
 		$Body = @{
-			name = $pipelineName
+			name = $PipelineName
 			configuration = @{
 				type = "yaml"
 				path = $YAMLPath
@@ -97,7 +97,7 @@
 
 		$Body = $Body | ConvertTo-Json -Depth 10
 		Write-Verbose $Body
-		$Result = Invoke-RestMethod -Uri $uri -Method POST -Headers $Header -ContentType "application/json" -Body $Body
+		$Result = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType "application/json" -Body $Body
 
 
 	}

@@ -32,7 +32,7 @@ Function Get-AzDOPipelineVariables{
 		[string]$Project = $Script:Project,
 
 		[Parameter(Mandatory)]
-		[string]$PipelineID
+		[string]$PipelineId
 	)
 
 	BEGIN{
