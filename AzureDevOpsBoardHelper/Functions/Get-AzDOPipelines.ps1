@@ -65,5 +65,6 @@ Function Get-AzDOPipelines{
 		}
 		ELSE{
 			$Pipelines.Value
+		}
 	}
 }
