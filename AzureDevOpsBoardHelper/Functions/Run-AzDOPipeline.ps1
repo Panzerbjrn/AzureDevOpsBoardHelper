@@ -37,7 +37,10 @@ Function Start-AzDOPipeline{
 		[string]$PipelineId,
 
         [Parameter()]
-        [string]$BranchName
+        [string]$BranchName,
+
+		[Parameter()]
+		[string[]]$StagesToSkip
 	)
 
 	BEGIN{
@@ -48,6 +51,9 @@ Function Start-AzDOPipeline{
 	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 
+		#Creating JsonBody
+		$JsonBody = @{}
+
         $RunParameters = @{
             resources = @{
                 repositories = @{
@@ -57,17 +63,17 @@ Function Start-AzDOPipeline{
         }
 
         IF($BranchName) {
-            #$RunParameters.resources.repositories.self.refName = "refs/heads/$BranchName"
             $RunParameters.resources.repositories.self["refName"] = "refs/heads/$BranchName"
         }
-		ELSE{
-			#$RunParameters.resources.repositories.self.refName = "refs/heads/master" This line commented out for now. Will be removed at a later date.
+		$JsonBody.runParameters = $RunParameters
+
+		IF($StagesToSkip) {
+			$JsonBody.stagesToSkip = $StagesToSkip
 		}
 
-        #$JsonBody = $RunParameters | ConvertTo-Json
-        $JsonBody = $RunParameters | ConvertTo-Json -Depth 10
-		$RunParameters
-		$JsonBody
+        #$JsonBody = $JsonBody | ConvertTo-Json
+        $JsonBody = $JsonBody | ConvertTo-Json -Depth 10
+
 		$Run = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $JsonBody
 	}
 	END{
