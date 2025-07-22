@@ -17,7 +17,7 @@
 		Add-AzDoUserStoryWorkItem -Project $TeamName -Title "Important Scripting work" -Board $WItem.fields.'System.AreaPath' -Description "Important work <br> Line 2" -AssignedTo $WItem.fields.'System.AssignedTo'.displayName -Verbose -Tags "Tag1","Tag2" -AcceptanceCriteria "Accepted"
 
 
-	.PARAMETER ProjectName
+	.PARAMETER Project
 		The name of your Azure Devops Project or Team
 
 	.PARAMETER WorkItemTitle
@@ -25,6 +25,12 @@
 
 	.PARAMETER Board
 		The name of your Azure Devops Board you want to add the item to
+
+	.PARAMETER StoryType
+		The type of work item to create. Valid values can be retrieved by running the Get-AzDoWorkItemTypes command.
+
+	.PARAMETER Iteration
+		The name of the iteration path to assign the work item to. This is often in the format "Project\IterationName". If not specified, the work item will not be assigned to any iteration.
 
 	.PARAMETER Description
 		The content of the description field. Lines can be broken by adding <br>
@@ -38,11 +44,11 @@
 	.PARAMETER AssignedTo
 		This is the person the item is assigned to.
 
-	.PARAMETER Tags
-		Tags assigned to the work item. These are separated by commas, i.e. "Tag1","Tag2"
-
 	.PARAMETER OriginalEstimate
 		How much time is the task expected to take
+
+	.PARAMETER Tags
+		Tags assigned to the work item. These are separated by commas, i.e. "Tag1","Tag2"
 
 	.INPUTS
 		Input is from command line or called from a script.
@@ -70,9 +76,10 @@
 		[Parameter(Mandatory)]
 		[string]$Board,
 
-		[Parameter(Mandatory)]
-		[ValidateSet("Issue","User Story","Bug")]
-		[string]$StoryType,
+		[Parameter(Mandatory,
+			HelpMessage = "The type of work item to create. Valid values can be retrieved by running the Get-AzDoWorkItemTypes command.")]
+		[Alias('StoryType')]
+		[string]$WorkItemType,
 
 		[Parameter()][string]$Iteration,
 
@@ -91,9 +98,8 @@
 
 	BEGIN{
 		Write-Verbose "Beginning $($MyInvocation.Mycommand)"
-		$Uri = $BaseUri + "$Project/_apis/wit/workitems/$($StoryType)?api-version=7.1"
-		#$Uri = $BaseUri + "$Projec/_apis/wit/workitems/User%20Story?api-version=7.1"
-		#$Uri = $BaseUri + "$Projec/_apis/wit/workitems/Bug?api-version=7.1"
+		$Uri = $BaseUri + "$Project/_apis/wit/workitems/`$$($WorkItemType)?api-version=7.1"
+		Write-Verbose "URI is $Uri"
 	}
 
 	PROCESS{
@@ -180,7 +186,7 @@
 		$Body = ConvertTo-Json $Body
 		Write-Verbose -Message $Body
 		Write-Verbose -Message "$Uri"
-		$Result = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType $JsonContentType -Body $Body
+		$Result = Invoke-RestMethod -Uri $Uri -Method POST -Headers $Header -ContentType "application/json-patch+json" -Body $Body
 	}
 	END{
 		Write-Verbose -Message "Ending $($MyInvocation.Mycommand)"
