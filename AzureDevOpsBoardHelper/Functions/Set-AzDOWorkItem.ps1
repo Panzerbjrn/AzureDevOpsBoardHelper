@@ -28,6 +28,9 @@ Function Set-AzDOWorkItem {
 	.PARAMETER Status
 		The desired status to set the work item to.
 
+	.PARAMETER Reason
+		The reason for the status.
+
 	.PARAMETER OriginalEstimate
 		How much time is the task expected to take
 
@@ -102,6 +105,14 @@ Function Set-AzDOWorkItem {
                 value = $Status
             }
         )
+		IF($Reason) {
+			$Body += @([pscustomobject]@{
+					op = "add"
+					path = "/fields/System.Reason"
+					value = $Reason
+				}
+			)
+		}
 		IF($OriginalEstimate) {
 			$Body += @([pscustomobject]@{
 					op = "add"
