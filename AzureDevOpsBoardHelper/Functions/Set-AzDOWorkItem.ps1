@@ -74,11 +74,13 @@ Function Set-AzDOWorkItem {
 		[Parameter()][int]$OriginalEstimate,
 		[Parameter()][int]$RemainingWork,
 		[Parameter()][int]$CompletedWork,
-		[Parameter()][string]$Status = "Active",
+		[Parameter()][string]$Status,
 		[Parameter()][string]$Reason,
 		[Parameter()][string]$WorkItemTitle,
 		[Parameter()][switch]$CalculateRemainingWork,
 		[Parameter()][switch]$AddToCompletedWork,
+		[Parameter()][switch]$AddTags,
+		[Parameter()][switch]$ReplaceTags,
 		[Parameter()][string[]]$Tags
 	)
 
@@ -89,6 +91,20 @@ Function Set-AzDOWorkItem {
 
 	PROCESS{
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
+
+		$updateParams = @('Status','Reason','OriginalEstimate','RemainingWork','CompletedWork','WorkItemTitle','CalculateRemainingWork','AddToCompletedWork','AddTags','ReplaceTags','Tags')
+		$hasUpdate = $false
+		foreach ($param in $updateParams) {
+			if ($PSBoundParameters.ContainsKey($param) -and ($PSBoundParameters[$param] -or $PSBoundParameters[$param] -is [switch])) {
+			$hasUpdate = $true
+			break
+			}
+		}
+		if (-not $hasUpdate) {
+			Write-Error "At least one parameter to update must be specified." -ErrorAction Stop
+			return
+		}
+
 
 		IF(!(Get-AzDoUserStoryWorkItem -WorkItemID $workItemId)) {
 			Write-Error -Message "Work item with ID $workItemId not found." -erroraction Stop
@@ -104,12 +120,14 @@ Function Set-AzDOWorkItem {
 			$RemainingWork = $OriginalEstimate - $CompletedWork
 		}
 
-        $Body = @([pscustomobject]@{
-                op = "replace"
-                path = "/fields/System.State"
-                value = $Status
-            }
-        )
+		IF($Status) {
+			$Body += @([pscustomobject]@{
+					op = "replace"
+					path = "/fields/System.State"
+					value = $Status
+				}
+			)
+		}
 		IF($Reason) {
 			$Body += @([pscustomobject]@{
 					op = "add"
@@ -150,12 +168,13 @@ Function Set-AzDOWorkItem {
 				}
 			)
 		}
+		IF($AddTags) {$CurrentTags = ((Get-AzDoUserStoryWorkItem -WorkItemID $WorkItemID).Fields.'System.Tags' -split ';').Trim()}
 		IF ($Tags) {
 			$CombiTag = ""
-			ForEach ($Tag in $Tags) { $CombiTag += "$Tag;" }
+			ForEach ($Tag in $Tags+$CurrentTags) { $CombiTag += "$Tag;" }
 			$CombiTag = $CombiTag.TrimEnd(';')
 			$Body += @([pscustomobject]@{
-					op = "add"
+					op = "replace"
 					path = '/fields/System.Tags'
 					value = $CombiTag
 				}
