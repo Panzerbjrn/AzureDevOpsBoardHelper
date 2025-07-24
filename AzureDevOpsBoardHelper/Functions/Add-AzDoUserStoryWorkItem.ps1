@@ -16,7 +16,6 @@
 		$WItem = Get-AzDoUserStoryWorkItem -Project $TeamName -WorkItemID 123456
 		Add-AzDoUserStoryWorkItem -Project $TeamName -Title "Important Scripting work" -Board $WItem.fields.'System.AreaPath' -Description "Important work <br> Line 2" -AssignedTo $WItem.fields.'System.AssignedTo'.displayName -Verbose -Tags "Tag1","Tag2" -AcceptanceCriteria "Accepted"
 
-
 	.PARAMETER Project
 		The name of your Azure Devops Project or Team
 
@@ -133,8 +132,7 @@
 		)
 
 		#This may need to have project added in front of the iteration.
-		IF ($Iteration)
-		{
+		IF ($Iteration){
 			$Body += @([pscustomobject]@{
 					op = "add"
 					path = '/fields/System.IterationPath'
@@ -143,8 +141,7 @@
 			)
 		}
 
-		IF ($Description)
-		{
+		IF ($Description){
 			$Body += @([pscustomobject]@{
 					op = "add"
 					path = '/fields/System.Description'
@@ -153,8 +150,7 @@
 			)
 		}
 
-		IF ($AcceptanceCriteria)
-		{
+		IF ($AcceptanceCriteria){
 			$Body += @([pscustomobject]@{
 					op = "add"
 					path = '/fields/Microsoft.VSTS.Common.AcceptanceCriteria'
@@ -163,8 +159,7 @@
 			)
 		}
 
-		IF ($OriginalEstimate)
-		{
+		IF ($OriginalEstimate){
 			$Body += @([pscustomobject]@{
 					op = "add"
 					path = '/fields/Microsoft.VSTS.Scheduling.OriginalEstimate'
@@ -173,8 +168,7 @@
 			)
 		}
 
-		IF ($Tags)
-		{
+		IF ($Tags){
 			ForEach ($Tag in $Tags) {$CombiTag += "$Tag;"}
 			$Body += @([pscustomobject]@{
 					op = "add"

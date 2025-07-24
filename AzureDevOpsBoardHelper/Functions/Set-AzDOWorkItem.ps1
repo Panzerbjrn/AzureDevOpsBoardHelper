@@ -49,6 +49,9 @@ Function Set-AzDOWorkItem {
 	.PARAMETER AddToCompletedWork
 		Adds the completed work to the existing completed work.
 
+	.PARAMETER Tags
+		Tags assigned to the work item. These are separated by commas, i.e. "Tag1","Tag2"
+
 	.INPUTS
 		Input is from command line or called from a script.
 
@@ -75,7 +78,8 @@ Function Set-AzDOWorkItem {
 		[Parameter()][string]$Reason,
 		[Parameter()][string]$WorkItemTitle,
 		[Parameter()][switch]$CalculateRemainingWork,
-		[Parameter()][switch]$AddToCompletedWork
+		[Parameter()][switch]$AddToCompletedWork,
+		[Parameter()][string[]]$Tags
 	)
 
 	BEGIN{
@@ -143,6 +147,17 @@ Function Set-AzDOWorkItem {
 					op = "add"
 					path = '/fields/System.Title'
 					value = $WorkItemTitle
+				}
+			)
+		}
+		IF ($Tags) {
+			$CombiTag = ""
+			ForEach ($Tag in $Tags) { $CombiTag += "$Tag;" }
+			$CombiTag = $CombiTag.TrimEnd(';')
+			$Body += @([pscustomobject]@{
+					op = "add"
+					path = '/fields/System.Tags'
+					value = $CombiTag
 				}
 			)
 		}

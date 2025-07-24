@@ -19,44 +19,27 @@
 	.PARAMETER OrganizationName
 		The name of your Azure Devops Organisation
 
-	.PARAMETER ProjectName
-		The name of your Azure Devops Project or Team
-
-	.PARAMETER WorkItemTitle
+	.PARAMETER Project
 		The name of your Azure Devops Project or Team
 
 	.PARAMETER Board
 		The name of your Azure Devops Board you want to add the item to
 
-	.PARAMETER Board
-		The name of your Azure Devops Board you want to add the item to
+	.PARAMETER WorkItemID
+		The ID of the work item you want to add the comment to
 
-	.PARAMETER Description
-		The content of the description field. Lines can be broken by adding <br>
-
-	.PARAMETER AcceptanceCriteria
-		The content of the Acceptance Criteria field. Lines can be broken by adding <br>
-
-	.PARAMETER Priority
-		This is the priority of the item. Default is 3.
-
-	.PARAMETER AssignedTo
-		This is the person the item is assigned to.
-
-	.PARAMETER Tags
-		Tags assigned to the work item. These are separated by commas, i.e. "Tag1","Tag2"
+	.PARAMETER Comment
+		The comment you want to add to the work item
 
 	.INPUTS
 		Input is from command line or called from a script.
 
 	.OUTPUTS
-		This will output the logfile.
+		This will output the rest api response.
 
 	.NOTES
-		Version:			0.1
 		Author:				Lars Panzerbjørn
 		Creation Date:		2020.07.31
-		Purpose/Change: Initial script development
 #>
 	[CmdletBinding()]
 	param(
