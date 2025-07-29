@@ -11,7 +11,7 @@ LONG DESCRIPTION
 EXAMPLES
 	Displays this help file:
 	Get-Help about_AzureDevOpsBoardHelper
-	
+
 	Get the list of available commands:
 	Get-Command -Module AzureDevOpsBoardHelper
 

@@ -30,7 +30,7 @@ CompanyName = 'Ordo Ursus'
 Copyright = '(c) 2019 Lars Panzerbjørn. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'This module will help with certain operations in your Azure DevOps organisation. Especially batch creating new items, or scheduling repeated tasks, pipelines etc. Feel free to get in touch via GitHub if there is anything you would like to see added.'
+Description = 'This module has been frozen and will no longer receive updates. Please switch to AzureDevOpsHelperModule.'
 
 # Minimum version of the PowerShell engine required by this module
 PowerShellVersion = '5.0'
