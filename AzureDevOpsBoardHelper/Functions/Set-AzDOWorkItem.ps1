@@ -93,7 +93,7 @@ Function Set-AzDOWorkItem {
 		Write-Verbose "Processing $($MyInvocation.Mycommand)"
 
 		$updateParams = @('Status','Reason','OriginalEstimate','RemainingWork','CompletedWork','WorkItemTitle','CalculateRemainingWork','AddToCompletedWork','AddTags','ReplaceTags','Tags')
-		$hasUpdate = $false
+		$hasUpdate = $False
 		foreach ($param in $updateParams) {
 			if ($PSBoundParameters.ContainsKey($param) -and ($PSBoundParameters[$param] -or $PSBoundParameters[$param] -is [switch])) {
 			$hasUpdate = $true

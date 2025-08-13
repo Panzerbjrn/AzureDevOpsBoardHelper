@@ -48,7 +48,7 @@ Function Remove-AzDoPipeline {
     }
 
     END{
-        if ($Response -eq $null) {
+        if ($Response -eq $Null) {
             Write-Output "Pipeline with ID $PipelineId has been successfully deleted from project $ProjectName."
         } else {
             Write-Output "Unexpected response received: $($Response | ConvertTo-Json -Depth 10)"

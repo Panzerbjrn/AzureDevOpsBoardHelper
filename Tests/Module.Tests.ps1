@@ -65,8 +65,8 @@ Describe "Validating commands are viable" -Tag 'Command_Validation' {
 			$File.Fullname | Should -Exist
 
 			$Contents = Get-Content -Path $File.Fullname -ErrorAction Stop
-			$Errors = $null
-			$null = [System.Management.Automation.PSParser]::Tokenize($Contents, [ref]$Errors)
+			$Errors = $Null
+			$Null = [System.Management.Automation.PSParser]::Tokenize($Contents, [ref]$Errors)
 			$Errors.Count | Should -Be 0
 
 		}
@@ -112,8 +112,8 @@ Describe "Validating commands are viable" -Tag 'Command_Validation' {
 			$File.Fullname | Should -Exist
 
 			$Contents = Get-Content -Path $File.Fullname -ErrorAction Stop
-			$Errors = $null
-			$null = [System.Management.Automation.PSParser]::Tokenize($Contents, [ref]$Errors)
+			$Errors = $Null
+			$Null = [System.Management.Automation.PSParser]::Tokenize($Contents, [ref]$Errors)
 			$Errors.Count | Should -Be 0
 
 		}

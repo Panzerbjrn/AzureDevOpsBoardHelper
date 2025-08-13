@@ -50,7 +50,7 @@ function ConvertFrom-JsonToHashtable {
 		$dict = $deserializer.DeserializeObject($InputObject)
 
 		# If the caseinsensitve is false then make the dictionary case insensitive
-		if ($casesensitive -eq $false) {
+		if ($casesensitive -eq $False) {
 			$dict = New-Object "System.Collections.Generic.Dictionary[System.String, System.Object]"($dict, [StringComparer]::OrdinalIgnoreCase)
 		}
 
